@@ -15,10 +15,13 @@ Messager::Messager(QObject *parent)
         this->myCallback(msg);
     });
 
-    mqlink->zmq.connect("localhost");
+    mqlink->mqtt.connect("localhost");
 
 
-    mqlink->zmq.sendFileContent("C:/Users/User/Downloads/OIP.jpg", true);
+    // mqlink->zmq.connect("localhost");
+
+    // mqlink->zmq.sendFileContent("C:/Users/User/Downloads/OIP.jpg", true);
+    // mqlink->zmq.sendFileContent("C:/Users/User/Desktop/sss1.txt", false);
     m_timer->start(500);
 }
 
@@ -37,7 +40,9 @@ void Messager::myCallback(const std::string &message)
 
 void Messager::onTimeout_slot()
 {
-    static int a = 0;
-    QString str = QString::number(a++);
-    mqlink->zmq.sendMessage(str.toStdString());
+    // static int a = 0;
+    // QString str = QString::number(a++);
+    // mqlink->zmq.sendMessage(str.toStdString());
+
+    mqlink->mqtt.publish("test/topic", "Are you there?");
 }

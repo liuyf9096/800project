@@ -153,6 +153,13 @@ void ZmqMessager::setCallback(MessageCallback callback)
 }
 
 // /* MQTT MQTT MQTT */
+MqttMessagerPrivate::MqttMessagerPrivate(QObject *parent)
+    : QObject{parent}
+{
+    client = new MqttClient(this);
+    server = new MqttServer(this);
+}
+
 MqttMessager::MqttMessager(): d_ptr(std::make_unique<MqttMessagerPrivate>())
 {
 
@@ -163,25 +170,18 @@ MqttMessager::~MqttMessager()
 
 }
 
-MqttMessagerPrivate::MqttMessagerPrivate(QObject *parent)
-    : QObject{parent}
+void MqttMessager::connect(const std::string &address, int port)
 {
-    qDebug() << "MqttMessagerPrivate";
-
-}
-
-void MqttMessager::connect(const std::string &address)
-{
-
+    d_ptr->client->connect(address, port);
 }
 
 void MqttMessager::disconnect()
 {
-
+    d_ptr->client->disconnect();
 }
 
-uint64_t MqttMessager::sendMessage(const std::string &message)
+void MqttMessager::publish(const std::string &topic, const std::string &message)
 {
-    return 1;
+    d_ptr->client->publish(topic, message);
 }
 

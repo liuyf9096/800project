@@ -32,6 +32,7 @@ public:
 
     void sendMessage(const std::string& message);
     bool sendFileContent(const std::string& fileName, bool isBinary = false);
+    void setReceiveFilePath(const std::string& filePath);
 
     /* receive message callback */
     void setCallback(MessageCallback callback);
@@ -47,10 +48,10 @@ public:
     MqttMessager();
     ~MqttMessager();
 
-    void connect(const std::string& address);
+    void connect(const std::string& address, int port = 1883);
     void disconnect();
 
-    uint64_t sendMessage(const std::string& message);
+    void publish(const std::string& topic, const std::string& message);
 
 private:
     std::unique_ptr<MqttMessagerPrivate> d_ptr;
