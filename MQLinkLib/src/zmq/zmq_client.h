@@ -34,8 +34,8 @@ public:
     void disconnect();
 
     void sendMessage(QString message);
-    void sendData(QByteArray data);
-    void sendBinaryFile(QByteArray header, QByteArray data);
+    bool sendFileContent(QString filePath);
+    bool sendBinaryFile(QString filePath);
 
 private:
     zmq::context_t m_context;

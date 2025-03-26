@@ -116,15 +116,12 @@ void ZmqMessager::sendMessage(const std::string &message)
 
 bool ZmqMessager::sendFileContent(const std::string &fileName, bool isBinary)
 {
-    QByteArray data = FFileManager::readFile(QString::fromStdString(fileName), FFileManager::POS_USER);
-    if (!data.isEmpty()) {
-        if (isBinary) {
-            d_ptr->client->sendData(data);
-            qDebug() << "data size:" << data.size();
-        } else {
-            d_ptr->client->sendMessage(data);
-        }
+    if (isBinary) {
+        return d_ptr->client->sendBinaryFile(QString::fromStdString(fileName));
+    } else {
+        return d_ptr->client->sendFileContent(QString::fromStdString(fileName));
     }
+
     return false;
 }
 
