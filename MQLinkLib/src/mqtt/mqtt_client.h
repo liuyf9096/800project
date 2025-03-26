@@ -24,6 +24,13 @@ public:
     void publish(QString topic, QString message);
     void publish(const std::string topic, const std::string message);
 
+    bool sendFileContent(QString topic, QString filePath);
+    bool sendFileContent(const std::string topic, const std::string filePath);
+
+signals:
+    void onReceiveMessage_signal(QString topic, QString message);
+    void onReceiveRawData_signal(QString topic, QByteArray data);
+
 private:
     QTimer *m_timer;
 

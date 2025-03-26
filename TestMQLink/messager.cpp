@@ -11,12 +11,15 @@ Messager::Messager(QObject *parent)
     qDebug() << "Device id:" << mqlink->getDeviceId();
     qDebug() << "Group id:" << mqlink->getGroupId();
 
-    mqlink->zmq.setCallback([this](const std::string& msg) {
-        this->myCallback(msg);
-    });
+    // mqlink->zmq.setCallback([this](const std::string& msg) {
+    //     this->myCallback(msg);
+    // });
 
     mqlink->mqtt.connect("localhost");
 
+    mqlink->mqtt.setMsgCallback([this](const std::string& topic, const std::string& msg) {
+        this->myCallback1(topic, msg);
+    });
 
     // mqlink->zmq.connect("localhost");
 
@@ -38,11 +41,16 @@ void Messager::myCallback(const std::string &message)
     qDebug() << "CB:" << str;
 }
 
+void Messager::myCallback1(const std::string &topic, const std::string &message)
+{
+    qDebug() << "CB1:" << topic << message;
+}
+
 void Messager::onTimeout_slot()
 {
-    // static int a = 0;
-    // QString str = QString::number(a++);
+    static int a = 0;
+    QString str = QString::number(a++);
     // mqlink->zmq.sendMessage(str.toStdString());
 
-    mqlink->mqtt.publish("test/topic", "Are you there?");
+    mqlink->mqtt.publish("test/topic", str.toStdString());
 }

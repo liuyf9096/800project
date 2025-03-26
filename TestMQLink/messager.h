@@ -15,6 +15,7 @@ public:
     MQLink *mqlink;
 
     void myCallback(const std::string& message);
+    void myCallback1(const std::string& topic, const std::string& message);
 
 private:
     QTimer *m_timer;

@@ -10,7 +10,6 @@
 #endif
 
 #include <memory>
-#include <cstdint>
 #include <string>
 #include <functional>
 
@@ -22,7 +21,7 @@ class ZmqMessagerPrivate;
 class MQLINKLIB_EXPORT ZmqMessager
 {
 public:
-    using MessageCallback = std::function<void(const std::string&)>;
+    using ZmqMessageCallback = std::function<void(const std::string&)>;
 
     ZmqMessager();
     ~ZmqMessager();
@@ -35,7 +34,7 @@ public:
     void setReceiveFilePath(const std::string& filePath);
 
     /* receive message callback */
-    void setCallback(MessageCallback callback);
+    void setCallback(ZmqMessageCallback callback);
 
 private:
     std::unique_ptr<ZmqMessagerPrivate> d_ptr;
@@ -45,6 +44,8 @@ class MqttMessagerPrivate;
 class MQLINKLIB_EXPORT MqttMessager
 {
 public:
+    using MqttMessageCallback = std::function<void(const std::string& topic, const std::string& message)>;
+    using MqttFileCallback = std::function<void(const std::string& topic, const std::string& data)>;
     MqttMessager();
     ~MqttMessager();
 
@@ -52,6 +53,13 @@ public:
     void disconnect();
 
     void publish(const std::string& topic, const std::string& message);
+
+    bool sendFileContent(const std::string& topic, const std::string& fileName);
+    void setReceiveFilePath(const std::string& filePath);
+
+    /* receive message callback */
+    void setMsgCallback(MqttMessageCallback callback);
+    void setFileCallback(MqttFileCallback callback);
 
 private:
     std::unique_ptr<MqttMessagerPrivate> d_ptr;

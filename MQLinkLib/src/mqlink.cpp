@@ -147,7 +147,7 @@ void ZmqMessager::setReceiveFilePath(const std::string &filePath)
     d_ptr->server->setDownloadPath(QString::fromStdString(filePath));
 }
 
-void ZmqMessager::setCallback(MessageCallback callback)
+void ZmqMessager::setCallback(ZmqMessageCallback callback)
 {
     d_ptr->m_callback = std::move(callback);
 }
@@ -158,6 +158,25 @@ MqttMessagerPrivate::MqttMessagerPrivate(QObject *parent)
 {
     client = new MqttClient(this);
     server = new MqttServer(this);
+    QObject::connect(client, &MqttClient::onReceiveMessage_signal,
+            this, &MqttMessagerPrivate::handleReceiveMessage_slot);
+    QObject::connect(client, &MqttClient::onReceiveRawData_signal,
+                     this, &MqttMessagerPrivate::handleReceiveFile_slot);
+}
+
+void MqttMessagerPrivate::handleReceiveMessage_slot(QString topic, QString message)
+{
+    if (m_msgCallback) {
+        m_msgCallback(topic.toStdString(), message.toStdString());
+    }
+}
+
+void MqttMessagerPrivate::handleReceiveFile_slot(QString topic, QByteArray data)
+{
+    if (m_fileCallback) {
+        std::string stdData(data.constData(), data.size());
+        m_fileCallback(topic.toStdString(), stdData);
+    }
 }
 
 MqttMessager::MqttMessager(): d_ptr(std::make_unique<MqttMessagerPrivate>())
@@ -185,3 +204,22 @@ void MqttMessager::publish(const std::string &topic, const std::string &message)
     d_ptr->client->publish(topic, message);
 }
 
+bool MqttMessager::sendFileContent(const std::string& topic, const std::string& fileName)
+{
+    return d_ptr->client->sendFileContent(topic, fileName);
+}
+
+void MqttMessager::setReceiveFilePath(const std::string &filePath)
+{
+    // d_ptr->server->setDownloadPath(QString::fromStdString(filePath));
+}
+
+void MqttMessager::setMsgCallback(MqttMessageCallback callback)
+{
+    d_ptr->m_msgCallback = std::move(callback);
+}
+
+void MqttMessager::setFileCallback(MqttFileCallback callback)
+{
+    d_ptr->m_fileCallback = std::move(callback);
+}

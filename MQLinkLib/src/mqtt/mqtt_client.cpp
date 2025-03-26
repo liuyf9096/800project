@@ -1,4 +1,6 @@
 #include "mqtt_client.h"
+#include <QFile>
+#include <QFileInfo>
 #include <QDebug>
 
 static void onConnect(struct mosquitto *mosq, void *obj, int rc);
@@ -81,6 +83,52 @@ void MqttClient::publish(const std::string topic, const std::string message)
     }
 }
 
+bool MqttClient::sendFileContent(QString topic, QString filePath)
+{
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Failed to open file:" << file.errorString();
+        return false;
+    }
+
+    QByteArray fileData = file.readAll();
+    file.close();
+
+    int rc = mosquitto_publish(mosq, nullptr, topic.toUtf8().constData(),
+                               fileData.size(), fileData.constData(), 1, false);
+
+    if (rc != MOSQ_ERR_SUCCESS) {
+        qWarning() << "Publish failed:" << mosquitto_strerror(rc);
+        return false;
+    } else {
+        qDebug() << "File sent successfully! Size:" << fileData.size() << "bytes";
+        return true;
+    }
+}
+
+bool MqttClient::sendFileContent(const std::string topic, const std::string filePath)
+{
+    QFile file(QString::fromStdString(filePath));
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Failed to open file:" << file.errorString();
+        return false;
+    }
+
+    QByteArray fileData = file.readAll();
+    file.close();
+
+    int rc = mosquitto_publish(mosq, nullptr, topic.c_str(),
+                               fileData.size(), fileData.constData(), 1, false);
+
+    if (rc != MOSQ_ERR_SUCCESS) {
+        qWarning() << "Publish failed:" << mosquitto_strerror(rc);
+        return false;
+    } else {
+        qDebug() << "File sent successfully! Size:" << fileData.size() << "bytes";
+        return true;
+    }
+}
+
 void MqttClient::onTimeout_slot()
 {
     if (mosq) {
@@ -88,6 +136,7 @@ void MqttClient::onTimeout_slot()
     }
 }
 
+/* Static Method */
 void onConnect(mosquitto *mosq, void *obj, int rc)
 {
     Q_UNUSED(mosq);
@@ -104,8 +153,29 @@ void onConnect(mosquitto *mosq, void *obj, int rc)
 void onMessage(mosquitto *mosq, void *obj, const mosquitto_message *msg)
 {
     Q_UNUSED(mosq);
-    Q_UNUSED(obj);
-    qDebug() << "Received message on topic:" << msg->topic << ":"
-             << QString::fromUtf8((char*)msg->payload, msg->payloadlen);
+
+    QByteArray data(static_cast<const char*>(msg->payload), msg->payloadlen);
+    QString message = QString::fromUtf8(data);
+    QString topic = msg->topic;
+
+    qDebug() << QString(">>[Topic:%1]%2").arg(topic, message);
+
+    // qDebug() << "Received message on topic:" << msg->topic << ":"
+    //          << QString::fromUtf8((char*)msg->payload, msg->payloadlen);
+
+    auto instance = static_cast<MqttClient*>(obj);
+    QMetaObject::invokeMethod(
+        instance,
+        "onReceiveMessage_signal",
+        Qt::QueuedConnection,
+        Q_ARG(QString, topic),
+        Q_ARG(QString, message));
+
+    QMetaObject::invokeMethod(
+        instance,
+        "onReceiveRawData_signal",
+        Qt::QueuedConnection,
+        Q_ARG(QString, topic),
+        Q_ARG(QByteArray, data));
 }
 
