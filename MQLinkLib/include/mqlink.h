@@ -32,6 +32,7 @@ public:
 
     void sendMessage(const std::string& message);
     bool sendFileContent(const std::string& fileName, bool isBinary = false);
+    void setReceiveFilePath(const std::string& filePath);
 
     /* receive message callback */
     void setCallback(MessageCallback callback);

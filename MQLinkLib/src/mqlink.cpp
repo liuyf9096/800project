@@ -3,7 +3,6 @@
 #include "f_common.h"
 #include "settings/f_settings.h"
 #include "logger/f_log_server.h"
-#include "file/f_file_manager.h"
 
 #include "zmq_messager_private.h"
 #include "mqtt_messager_private.h"
@@ -40,8 +39,8 @@ MQLinkPrivate::MQLinkPrivate(QObject *parent)
     FLogServer::GetInstance();
     FSettings::GetInstance();
 
-    /* log */
     logInit();
+    downloadPathInit();
 }
 
 MQLinkPrivate::~MQLinkPrivate()
@@ -63,6 +62,20 @@ void MQLinkPrivate::logInit()
     if (settings->isLogServerEnable()) {
         logger->saveToTxtEnable(true, settings->logindex());
         logger->start();
+    }
+}
+
+void MQLinkPrivate::downloadPathInit()
+{
+    QDir projectDir(QDir::currentPath());
+    QString downloadFolder = "download";
+
+    if (!projectDir.exists(downloadFolder)) {
+        if (projectDir.mkdir(downloadFolder)) {
+            qDebug() << "Download folder created successfully!";
+        } else {
+            qDebug() << "Failed to create download folder!";
+        }
     }
 }
 
@@ -91,6 +104,10 @@ ZmqMessager::ZmqMessager() : d_ptr(std::make_unique<ZmqMessagerPrivate>())
     }
     QString address = QString("tcp://*:%1").arg(port);
     d_ptr->server->bindAddress(address);
+
+    QDir dir(QDir::currentPath());
+    dir.cd("download");
+    d_ptr->server->setDownloadPath(dir.absolutePath());
 }
 
 ZmqMessager::~ZmqMessager()
@@ -123,6 +140,11 @@ bool ZmqMessager::sendFileContent(const std::string &fileName, bool isBinary)
     }
 
     return false;
+}
+
+void ZmqMessager::setReceiveFilePath(const std::string &filePath)
+{
+    d_ptr->server->setDownloadPath(QString::fromStdString(filePath));
 }
 
 void ZmqMessager::setCallback(MessageCallback callback)

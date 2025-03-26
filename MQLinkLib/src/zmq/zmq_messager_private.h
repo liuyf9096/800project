@@ -5,7 +5,7 @@
 #include "zmq_server.h"
 #include <QObject>
 
-using ZmqCallback = std::function<void(const std::string&)>;
+using ZmqMsgCallback = std::function<void(const std::string&)>;
 
 class ZmqMessagerPrivate : public QObject
 {
@@ -16,7 +16,7 @@ public:
     ZmqClient *client;
     ZmqServer *server;
 
-    ZmqCallback m_callback;
+    ZmqMsgCallback m_callback;
 
 public slots:
     void handleReceiveMessage_slot(QString message);

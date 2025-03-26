@@ -120,7 +120,9 @@ bool ZmqClient::sendFileContent(QString filePath)
     memcpy(dataMsg.data(), fileData.constData(), fileData.size());
     m_socket.send(dataMsg, zmq::send_flags::none);
 
-    qDebug() << "Send file:" << filePath << "size:" << fileData.size() << header;
+    qDebug() << "<<[Zmq Client]"
+             << QString("[File]%1 size:%2").arg(filePath).arg(fileData.size());
+    // qDebug() << header.toHex();
 
 #if 0
     QFile file(filePath);
@@ -168,7 +170,9 @@ bool ZmqClient::sendBinaryFile(QString filePath)
     memcpy(dataMsg.data(), fileData.constData(), fileData.size());
     m_socket.send(dataMsg, zmq::send_flags::none);
 
-    qDebug() << "send file:" << filePath << "size:" << fileData.size() << header;
+    qDebug() << "<<[Zmq Client]"
+             << QString("[File]%1 size:%2").arg(filePath).arg(fileData.size());
+    // qDebug() << header.toHex();
     return true;
 }
 

@@ -10,6 +10,8 @@ ZmqServer::ZmqServer(QObject *parent)
     , m_socket(m_context, zmq::socket_type::router)
     , m_mode(ZMQ_S_ROUTER)
 {
+    m_dlDir = QDir::current();
+
     m_timer = new QTimer(this);
     m_timer->setInterval(50);
     connect(m_timer, &QTimer::timeout, this, &ZmqServer::onTimeout_slot);
@@ -68,6 +70,12 @@ void ZmqServer::sendMessage(QString clientId, QString message)
     zmq::message_t reply(message.toUtf8().constData(), message.toUtf8().size());
     m_socket.send(reply, zmq::send_flags::none);
     qDebug() << ">>[Zmq Server]" << message;
+}
+
+void ZmqServer::setDownloadPath(QString path)
+{
+    m_dlDir.setPath(path);
+    qDebug() << __FUNCTION__ << path;
 }
 
 void ZmqServer::handleReqRepLoop()
@@ -138,13 +146,18 @@ void ZmqServer::handleRouterDealerLoop()
                     QByteArray fileData(static_cast<const char*>(fileDataMsg.data()), fileDataMsg.size());
 
                     /* save file content */
-                    QFile outFile(fileName);
+                    QString filePath = m_dlDir.absoluteFilePath(fileName);
+                    QFile outFile(filePath);
                     if (outFile.open(QIODevice::WriteOnly)) {
                         outFile.write(fileData);
                         outFile.close();
                         qDebug() << "File received and saved:" << fileName;
+
+                        QString message = QString("[File]%1").arg(filePath);
+                        qDebug() << ">>[Zmq Server]" << message;
+                        emit onReceiveMessage_signal(message);
                     } else {
-                        qDebug() << "Failed to save file:" << fileName;
+                        qDebug() << "Failed to save file:" << filePath;
                     }
                 }
             }
