@@ -2,7 +2,8 @@
 #define MESSAGECENTER_H
 
 #include <QObject>
-// #include "mosquitto.h"
+#include "mqtt/mqtt_messager.h"
+#include "zmq/zmq_messager.h"
 
 class QSocketNotifier;
 class MessageCenter : public QObject
@@ -10,13 +11,6 @@ class MessageCenter : public QObject
     Q_OBJECT
 public:
     static MessageCenter *GetInstance();
-
-    void connectServer(qint16 port = 1883, QString ip = "localhost", quint16 timeout = 60);
-    void subscribeTopic(QString topic);
-    void unsubscribeTopic(QString topic);
-
-    // void handleMessage(const struct mosquitto_message *msg);
-    void handleConnect(int rc);
 
 private:
     explicit MessageCenter(QObject *parent = nullptr);

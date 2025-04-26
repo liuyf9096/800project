@@ -36,5 +36,7 @@ int main(int argc, char *argv[])
     QObject::connect(&app, &QCoreApplication::aboutToQuit, &cleanup);
 #endif
 
+
+
     return app.exec();
 }

@@ -1,6 +1,7 @@
 #ifndef ZMQ_CLIENT_H
 #define ZMQ_CLIENT_H
 
+#include "zmq.hpp"
 #include <QObject>
 #include <QTimer>
 
@@ -26,20 +27,21 @@ public:
     explicit ZmqClient(QObject *parent = nullptr);
     ~ZmqClient();
 
-    void setMode(ZmqClientMode mode);
+    void setClientMode(ZmqClientMode mode);
     void setLoopTimer(int msec);
 
-    void connect(QString address = "tcp://localhost:5555");
+    void connectServer(QString address = "tcp://localhost:5555");
     void disconnect();
+
     void sendMessage(QString message);
-    quint64 sendMessageWithID(QString message);
+    bool sendFileContent(QString filePath);
+    bool sendBinaryFile(QString filePath);
 
 private:
-    void* m_context = nullptr;
-    void* m_socket = nullptr;
+    zmq::context_t m_context;
+    zmq::socket_t m_socket;
 
     ZmqClientMode m_mode{ZMQ_C_Undefine};
-    quint32 m_index{0};
 
     QString m_serverAddress;
     QTimer *m_timer;

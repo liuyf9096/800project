@@ -214,6 +214,8 @@ Makefile: ..\..\MQLink.pro C:\Qt\6.5.3\msvc2019_64\mkspecs\win32-msvc\qmake.conf
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\resolve_config.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\exclusive_builds_post.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\default_post.prf \
+		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\cmdline.prf \
+		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\win32\console.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\qml_debug.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\entrypoint.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\precompile_header.prf \
@@ -223,28 +225,22 @@ Makefile: ..\..\MQLink.pro C:\Qt\6.5.3\msvc2019_64\mkspecs\win32-msvc\qmake.conf
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\resources.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\moc.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\win32\opengl.prf \
-		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\uic.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\qmake_use.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\file_copies.prf \
-		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\win32\windows.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\testcase_targets.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\exceptions.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\yacc.prf \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\lex.prf \
 		..\..\MQLink.pro \
-		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Widgets.prl \
 		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Gui.prl \
 		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Mqtt.prl \
 		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Network.prl \
 		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Core.prl \
-		C:\Qt\6.5.3\msvc2019_64\lib\Qt6EntryPoint.prl \
 		C:\Qt\6.5.3\msvc2019_64\mkspecs\features\build_pass.prf \
-		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Widgetsd.prl \
 		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Guid.prl \
 		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Mqttd.prl \
 		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Networkd.prl \
-		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Cored.prl \
-		C:\Qt\6.5.3\msvc2019_64\lib\Qt6EntryPointd.prl
+		C:\Qt\6.5.3\msvc2019_64\lib\Qt6Cored.prl
 	$(QMAKE) -o Makefile ..\..\MQLink.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\spec_pre.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\common\windows-desktop.conf:
@@ -376,6 +372,8 @@ C:\Qt\6.5.3\msvc2019_64\mkspecs\features\win32\default_pre.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\resolve_config.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\exclusive_builds_post.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\default_post.prf:
+C:\Qt\6.5.3\msvc2019_64\mkspecs\features\cmdline.prf:
+C:\Qt\6.5.3\msvc2019_64\mkspecs\features\win32\console.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\qml_debug.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\entrypoint.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\precompile_header.prf:
@@ -385,28 +383,22 @@ C:\Qt\6.5.3\msvc2019_64\mkspecs\features\resources_functions.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\resources.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\moc.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\win32\opengl.prf:
-C:\Qt\6.5.3\msvc2019_64\mkspecs\features\uic.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\qmake_use.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\file_copies.prf:
-C:\Qt\6.5.3\msvc2019_64\mkspecs\features\win32\windows.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\testcase_targets.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\exceptions.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\yacc.prf:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\lex.prf:
 ..\..\MQLink.pro:
-C:\Qt\6.5.3\msvc2019_64\lib\Qt6Widgets.prl:
 C:\Qt\6.5.3\msvc2019_64\lib\Qt6Gui.prl:
 C:\Qt\6.5.3\msvc2019_64\lib\Qt6Mqtt.prl:
 C:\Qt\6.5.3\msvc2019_64\lib\Qt6Network.prl:
 C:\Qt\6.5.3\msvc2019_64\lib\Qt6Core.prl:
-C:\Qt\6.5.3\msvc2019_64\lib\Qt6EntryPoint.prl:
 C:\Qt\6.5.3\msvc2019_64\mkspecs\features\build_pass.prf:
-C:\Qt\6.5.3\msvc2019_64\lib\Qt6Widgetsd.prl:
 C:\Qt\6.5.3\msvc2019_64\lib\Qt6Guid.prl:
 C:\Qt\6.5.3\msvc2019_64\lib\Qt6Mqttd.prl:
 C:\Qt\6.5.3\msvc2019_64\lib\Qt6Networkd.prl:
 C:\Qt\6.5.3\msvc2019_64\lib\Qt6Cored.prl:
-C:\Qt\6.5.3\msvc2019_64\lib\Qt6EntryPointd.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\..\MQLink.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 

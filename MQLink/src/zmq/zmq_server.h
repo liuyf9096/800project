@@ -1,9 +1,11 @@
 #ifndef ZMQ_SERVER_H
 #define ZMQ_SERVER_H
 
+#include "zmq.hpp"
 #include <QObject>
 #include <QTimer>
 #include <QMap>
+#include <QDir>
 
 /*
     REQ-REP:(Client)ZMQ_REQ, (Server)ZMQ_REP
@@ -32,16 +34,20 @@ public:
 
     void bindAddress(QString address = "tcp://*:5555");
     void sendMessage(QString clientId, QString message);
+    void setDownloadPath(QString path);
+
+signals:
+    void onReceiveMessage_signal(QString message);
 
 private:
-    void* m_context = nullptr;
-    void* m_socket = nullptr;
+    zmq::context_t m_context;
+    zmq::socket_t m_socket;
+    zmq::message_t m_clientIdentity;
+    QDir m_dlDir;
 
-    ZmqServerMode m_mode{ZMQ_S_Undefine};
-    quint32 m_index{0};
+    ZmqServerMode m_mode{ZMQ_S_ROUTER};
 
     QTimer *m_timer;
-    QByteArray m_identity;
     QMap<QByteArray, QString> clientMap;
 
     void handleReqRepLoop();

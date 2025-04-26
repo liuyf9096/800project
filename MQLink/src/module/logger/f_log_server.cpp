@@ -43,11 +43,8 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 //![LoggerServer]
 FLogServer *FLogServer::GetInstance()
 {
-    static FLogServer *instance = nullptr;
-    if (instance == nullptr) {
-        instance = new FLogServer();
-    }
-    return instance;
+    static FLogServer instance;
+    return &instance;
 }
 
 FLogServer::FLogServer(QObject *parent)
@@ -55,6 +52,11 @@ FLogServer::FLogServer(QObject *parent)
     , Dptr(new FLogServerPrivate(this))
 {
 
+}
+
+FLogServer::~FLogServer()
+{
+    qDebug() << __FUNCTION__;
 }
 
 void FLogServer::start()

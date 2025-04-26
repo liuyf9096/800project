@@ -16,7 +16,7 @@ void servers_init()
     /* log */
     setLog();
 
-    MessageCenter::GetInstance()->connectServer();
+    MessageCenter::GetInstance();
     FSettings::GetInstance();
     FLogServer::GetInstance();
 }

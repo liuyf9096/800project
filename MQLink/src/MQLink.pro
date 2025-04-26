@@ -4,7 +4,7 @@ CONFIG += c++17
 VERSION = 1.0.0
 CONFIG += skip_target_version_ext
 
-DEFINES += INCLUDE_GUI
+# DEFINES += INCLUDE_GUI
 
 contains(DEFINES, INCLUDE_GUI) {
     QT += gui widgets
@@ -76,4 +76,10 @@ DEPENDPATH += $$PWD/../../../../../zeromq/include
 
 # INCLUDEPATH += $$PWD/../../../../zeromq/include
 # DEPENDPATH += $$PWD/../../../../zeromq/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../../../Program Files/mosquitto/devel/' -lmosquitto
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../../../Program Files/mosquitto/devel/' -lmosquitto
+
+win32:INCLUDEPATH += $$PWD/'../../../../../Program Files/mosquitto/devel'
+win32:DEPENDPATH += $$PWD/'../../../../../Program Files/mosquitto/devel'
 

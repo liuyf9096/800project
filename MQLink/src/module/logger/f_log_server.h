@@ -60,6 +60,7 @@ signals:
 private:
     explicit FLogServer(QObject *parent = nullptr);
     Q_DISABLE_COPY(FLogServer)
+    ~FLogServer();
 
     FLogServerPrivate * const Dptr;
     Q_DECLARE_PRIVATE_D(Dptr, FLogServer)

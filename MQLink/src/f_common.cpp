@@ -11,11 +11,8 @@ static const QString AppName = "MQLink";
 
 FCommon *FCommon::GetInstance()
 {
-    static FCommon *instance = nullptr;
-    if (instance == nullptr) {
-        instance = new FCommon();
-    }
-    return instance;
+    static FCommon instance;
+    return &instance;
 }
 
 FCommon::FCommon(QObject *parent) : QObject(parent)
@@ -26,6 +23,11 @@ FCommon::FCommon(QObject *parent) : QObject(parent)
     // }
 
     m_verbose = false;
+}
+
+FCommon::~FCommon()
+{
+    qDebug() << __FUNCTION__;
 }
 
 void FCommon::printSystemInfo()

@@ -14,11 +14,20 @@ public:
     void setValue(const QString &key, const QVariant &value);
     QVariant getValue(const QString &key);
 
-    bool isDebugMode();
+    QString deviceId();
+    QString groupId();
+
+    /* Zmq */
+    int getZmqClientMode();
+    int getZmqClientPort();
+
+    int getZmqServerMode();
+    int getZmqServerPort();
 
     /* Log */
     quint32 logindex();
     quint32 MaxLogFileCount();
+    int logContentType();
     bool isLogServerEnable();
 
 private:

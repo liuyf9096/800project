@@ -46,6 +46,7 @@ public:
 private:
     explicit FCommon(QObject *parent = nullptr);
     Q_DISABLE_COPY(FCommon)
+    ~FCommon();
 
     QJsonObject m_configObj;
     bool m_verbose;
