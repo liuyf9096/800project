@@ -55,3 +55,15 @@ ls
 export LD_LIBRARY_PATH=$(pwd):$LD_LIBRARY_PATH
 ./TestMQLink
 exit
+ls
+cd MQLink
+ls
+cd src/
+ls
+qmake MQLink.pro
+qmake MQLink.pro
+ls
+make
+ls
+make
+make clean

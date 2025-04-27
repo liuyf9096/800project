@@ -1,8 +1,9 @@
 QT += core
+QT -= gui
 
-CONFIG += c++17
+CONFIG += c++17 cmdline
 VERSION = 1.0.0
-CONFIG += skip_target_version_ext cmdline
+CONFIG += skip_target_version_ext
 
 SOURCES += \
     f_common.cpp \

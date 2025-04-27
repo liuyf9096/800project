@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_NO_DEBUG -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -fPIC -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -pipe -O2 -std=gnu++1z -Wall -Wextra -fPIC -D_REENTRANT $(DEFINES)
-INCPATH       = -I. -Imodule -Izmq -Imqtt -I/home/user/MQLink/src/../../../../../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I. -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++
+INCPATH       = -I. -Imodule -Izmq -Imqtt -I/home/user/MQLink/src/../../../../../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I. -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++
 QMAKE         = /opt/Qt/6.5.0/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -39,8 +39,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = MQLink1.0.0
 DISTDIR = /home/user/MQLink/src/.tmp/MQLink1.0.0
 LINK          = g++
-LFLAGS        = -Wl,-O1 -Wl,-rpath,/opt/Qt/6.5.0/gcc_64/lib -Wl,-rpath-link,/opt/Qt/6.5.0/gcc_64/lib
-LIBS          = $(SUBLIBS) /opt/Qt/6.5.0/gcc_64/lib/libQt6Gui.so /opt/Qt/6.5.0/gcc_64/lib/libQt6Core.so -lpthread -lGL   
+LFLAGS        = -Wl,-O1 -Wl,-rpath,/opt/Qt/6.5.0/gcc_64/lib
+LIBS          = $(SUBLIBS) -lzmq -lmosquitto /opt/Qt/6.5.0/gcc_64/lib/libQt6Core.so -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -236,7 +236,6 @@ DIST          = /opt/Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/resources_functions.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/resources.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/moc.prf \
-		/opt/Qt/6.5.0/gcc_64/mkspecs/features/unix/opengl.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/unix/thread.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/qmake_use.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/file_copies.prf \
@@ -418,7 +417,6 @@ Makefile: MQLink.pro /opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt/6
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/resources_functions.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/resources.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/moc.prf \
-		/opt/Qt/6.5.0/gcc_64/mkspecs/features/unix/opengl.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/unix/thread.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/qmake_use.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/file_copies.prf \
@@ -427,7 +425,6 @@ Makefile: MQLink.pro /opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt/6
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt/6.5.0/gcc_64/mkspecs/features/lex.prf \
 		MQLink.pro \
-		/opt/Qt/6.5.0/gcc_64/lib/libQt6Gui.prl \
 		/opt/Qt/6.5.0/gcc_64/lib/libQt6Core.prl
 	$(QMAKE) -o Makefile MQLink.pro
 /opt/Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf:
@@ -567,7 +564,6 @@ Makefile: MQLink.pro /opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt/6
 /opt/Qt/6.5.0/gcc_64/mkspecs/features/resources_functions.prf:
 /opt/Qt/6.5.0/gcc_64/mkspecs/features/resources.prf:
 /opt/Qt/6.5.0/gcc_64/mkspecs/features/moc.prf:
-/opt/Qt/6.5.0/gcc_64/mkspecs/features/unix/opengl.prf:
 /opt/Qt/6.5.0/gcc_64/mkspecs/features/unix/thread.prf:
 /opt/Qt/6.5.0/gcc_64/mkspecs/features/qmake_use.prf:
 /opt/Qt/6.5.0/gcc_64/mkspecs/features/file_copies.prf:
@@ -576,7 +572,6 @@ Makefile: MQLink.pro /opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt/6
 /opt/Qt/6.5.0/gcc_64/mkspecs/features/yacc.prf:
 /opt/Qt/6.5.0/gcc_64/mkspecs/features/lex.prf:
 MQLink.pro:
-/opt/Qt/6.5.0/gcc_64/lib/libQt6Gui.prl:
 /opt/Qt/6.5.0/gcc_64/lib/libQt6Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile MQLink.pro
@@ -748,7 +743,7 @@ moc_f_common.cpp: f_common.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/quuid.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include f_common.h -o moc_f_common.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include f_common.h -o moc_f_common.cpp
 
 moc_messagecenter.cpp: messagecenter.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QObject \
@@ -878,7 +873,7 @@ moc_messagecenter.cpp: messagecenter.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/q20memory.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include messagecenter.h -o moc_messagecenter.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include messagecenter.h -o moc_messagecenter.cpp
 
 moc_f_log_server.cpp: module/logger/f_log_server.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QObject \
@@ -1005,7 +1000,7 @@ moc_f_log_server.cpp: module/logger/f_log_server.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qfileinfo.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include module/logger/f_log_server.h -o moc_f_log_server.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include module/logger/f_log_server.h -o moc_f_log_server.cpp
 
 moc_f_log_server_p.cpp: module/logger/f_log_server_p.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QObject \
@@ -1134,7 +1129,7 @@ moc_f_log_server_p.cpp: module/logger/f_log_server_p.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QMessageLogger \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include module/logger/f_log_server_p.h -o moc_f_log_server_p.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include module/logger/f_log_server_p.h -o moc_f_log_server_p.cpp
 
 moc_f_settings.cpp: module/settings/f_settings.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QObject \
@@ -1258,7 +1253,7 @@ moc_f_settings.cpp: module/settings/f_settings.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/quuid.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include module/settings/f_settings.h -o moc_f_settings.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include module/settings/f_settings.h -o moc_f_settings.cpp
 
 moc_mqtt_client.cpp: mqtt/mqtt_client.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QObject \
@@ -1357,7 +1352,7 @@ moc_mqtt_client.cpp: mqtt/mqtt_client.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qbasictimer.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mqtt/mqtt_client.h -o moc_mqtt_client.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mqtt/mqtt_client.h -o moc_mqtt_client.cpp
 
 moc_mqtt_messager.cpp: mqtt/mqtt_messager.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QObject \
@@ -1458,7 +1453,7 @@ moc_mqtt_messager.cpp: mqtt/mqtt_messager.h \
 		mqtt/mqtt_server.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mqtt/mqtt_messager.h -o moc_mqtt_messager.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mqtt/mqtt_messager.h -o moc_mqtt_messager.cpp
 
 moc_mqtt_server.cpp: mqtt/mqtt_server.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QObject \
@@ -1554,7 +1549,7 @@ moc_mqtt_server.cpp: mqtt/mqtt_server.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mqtt/mqtt_server.h -o moc_mqtt_server.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mqtt/mqtt_server.h -o moc_mqtt_server.cpp
 
 moc_zmq_client.cpp: zmq/zmq_client.h \
 		zmq/zmq.hpp \
@@ -1654,7 +1649,7 @@ moc_zmq_client.cpp: zmq/zmq_client.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qbasictimer.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include zmq/zmq_client.h -o moc_zmq_client.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include zmq/zmq_client.h -o moc_zmq_client.cpp
 
 moc_zmq_messager.cpp: zmq/zmq_messager.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QObject \
@@ -1780,7 +1775,7 @@ moc_zmq_messager.cpp: zmq/zmq_messager.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/q20memory.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include zmq/zmq_messager.h -o moc_zmq_messager.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include zmq/zmq_messager.h -o moc_zmq_messager.cpp
 
 moc_zmq_server.cpp: zmq/zmq_server.h \
 		zmq/zmq.hpp \
@@ -1904,7 +1899,7 @@ moc_zmq_server.cpp: zmq/zmq_server.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/q20memory.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
-	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtGui -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include zmq/zmq_server.h -o moc_zmq_server.cpp
+	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/MQLink/src/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/MQLink/src -I/home/user/MQLink/src/module -I/home/user/MQLink/src/zmq -I/home/user/MQLink/src/mqtt -I/../zeromq/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include zmq/zmq_server.h -o moc_zmq_server.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
