@@ -24,8 +24,8 @@ unix:!macx{
     LIBS += -L$$PWD/output/ -llibmqlink
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/output/ -llibmqlink
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/output/ -llibmqlinkd
+CONFIG(release, debug|release): LIBS += -L$$PWD/output/ -llibmqlink
+else:CONFIG(debug, debug|release): LIBS += -L$$PWD/output/ -llibmqlinkd
 
 INCLUDEPATH += $$PWD/include
 DEPENDPATH += $$PWD/include

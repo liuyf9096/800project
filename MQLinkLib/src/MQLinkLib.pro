@@ -71,6 +71,6 @@ DEPENDPATH += $$PWD/../../../../../zeromq/include
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../../../Program Files/mosquitto/devel/' -lmosquitto
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../../../Program Files/mosquitto/devel/' -lmosquitto
 
-INCLUDEPATH += $$PWD/'../../../../../Program Files/mosquitto/devel'
-DEPENDPATH += $$PWD/'../../../../../Program Files/mosquitto/devel'
+win32:INCLUDEPATH += $$PWD/'../../../../../Program Files/mosquitto/devel'
+win32:DEPENDPATH += $$PWD/'../../../../../Program Files/mosquitto/devel'
 

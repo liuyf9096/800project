@@ -158,7 +158,7 @@ void onMessage(mosquitto *mosq, void *obj, const mosquitto_message *msg)
     QString message = QString::fromUtf8(data);
     QString topic = msg->topic;
 
-    qDebug() << QString(">>[Topic:%1]%2").arg(topic, message);
+    // qDebug() << QString(">>[Topic:%1]%2").arg(topic, message);
 
     // qDebug() << "Received message on topic:" << msg->topic << ":"
     //          << QString::fromUtf8((char*)msg->payload, msg->payloadlen);

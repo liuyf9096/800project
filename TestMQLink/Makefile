@@ -651,7 +651,10 @@ moc_messager.cpp: messager.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
-		include/mqlinklib.h \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qbasictimer.h \
+		include/mqlink.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.0/gcc_64/libexec/moc
 	/opt/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/user/TestMQLink/moc_predefs.h -I/opt/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/user/TestMQLink -I/home/user/TestMQLink/include -I/opt/Qt/6.5.0/gcc_64/include -I/opt/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include messager.h -o moc_messager.cpp
@@ -795,7 +798,10 @@ main.o: main.cpp /opt/Qt/6.5.0/gcc_64/include/QtCore/QCoreApplication \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qvariant.h \
 		messager.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/QObject \
-		include/mqlinklib.h
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qbasictimer.h \
+		include/mqlink.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 messager.o: messager.cpp messager.h \
@@ -890,8 +896,15 @@ messager.o: messager.cpp messager.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
-		include/mqlinklib.h \
-		/opt/Qt/6.5.0/gcc_64/include/QtCore/QDebug \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qbasictimer.h \
+		include/mqlink.h \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/QDateTime \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/qvariant.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qdebug.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qtextstream.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qstringconverter_base.h \
@@ -904,7 +917,8 @@ messager.o: messager.cpp messager.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qset.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qhash.h \
 		/opt/Qt/6.5.0/gcc_64/include/QtCore/qvarlengtharray.h \
-		/opt/Qt/6.5.0/gcc_64/include/QtCore/q20memory.h
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/q20memory.h \
+		/opt/Qt/6.5.0/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o messager.o messager.cpp
 
 moc_messager.o: moc_messager.cpp 
