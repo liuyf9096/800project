@@ -1,1 +1,4 @@
-C:\Users\User\workspace\MQLink\src\build
+MQLink/src/build/
+*.o
+*.so
+*.so.*
