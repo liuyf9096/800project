@@ -2,6 +2,8 @@
 #include <zmq.h>
 #include <QFile>
 #include <QFileInfo>
+#include <QDataStream>
+#include <QIODevice>
 #include <QDebug>
 
 ZmqClient::ZmqClient(QObject *parent)
