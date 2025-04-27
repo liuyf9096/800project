@@ -1,5 +1,4 @@
-MQLink/src/build/
-MQLinkLib/src/build
+**/build/
 *.o
 *.so
 *.so.*
