@@ -15,17 +15,17 @@ public:
     ~MqttClient();
 
     bool connect(QString address, int port = 1883);
-    bool connect(const std::string address, int port = 1883);
+    bool connect_c(const std::string address, int port = 1883);
     bool disconnect();
 
     void subscribe(QString topic);
-    void subscribe(const std::string topic);
+    void subscribe_c(const std::string topic);
 
     void publish(QString topic, QString message);
-    void publish(const std::string topic, const std::string message);
+    void publish_c(const std::string topic, const std::string message);
 
     bool sendFileContent(QString topic, QString filePath);
-    bool sendFileContent(const std::string topic, const std::string filePath);
+    bool sendFileContent_c(const std::string topic, const std::string filePath);
 
 signals:
     void onReceiveMessage_signal(QString topic, QString message);

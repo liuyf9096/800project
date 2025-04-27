@@ -12,7 +12,6 @@ ZmqMessager::ZmqMessager(QObject *parent)
 {
     client = new ZmqClient(this);
     server = new ZmqServer(this);
-    server->bindAddress();
 }
 
 ZmqMessager::~ZmqMessager()

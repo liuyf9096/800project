@@ -966,6 +966,14 @@ debug\moc_f_settings.cpp: ..\..\module\settings\f_settings.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qdatetime.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qcalendar.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qlocale.h \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\QJsonObject \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qjsonobject.h \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qjsonvalue.h \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qcborvalue.h \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qcborcommon.h \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qregularexpression.h \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qurl.h \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\quuid.h \
 		debug\moc_predefs.h \
 		C:\Qt\6.5.3\msvc2019_64\bin\moc.exe
 	C:\Qt\6.5.3\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include C:/Users/User/workspace/MQLink/src/build/Desktop_Qt_6_5_3_MSVC2019_64bit-Debug/debug/moc_predefs.h -IC:/Qt/6.5.3/msvc2019_64/mkspecs/win32-msvc -IC:/Users/User/workspace/MQLink/src -IC:/Users/User/workspace/MQLink/src/module -IC:/Users/User/workspace/MQLink/src/zmq -IC:/Users/User/workspace/MQLink/src/mqtt -IC:/zeromq/include -I"C:/Program Files/mosquitto/devel" -IC:/Qt/6.5.3/msvc2019_64/include -IC:/Qt/6.5.3/msvc2019_64/include/QtGui -IC:/Qt/6.5.3/msvc2019_64/include/QtMqtt -IC:/Qt/6.5.3/msvc2019_64/include/QtNetwork -IC:/Qt/6.5.3/msvc2019_64/include/QtCore -I. -I"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include" -I"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\ATLMFC\include" -I"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\include" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\um" -I"C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\shared" -I"C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\winrt" -I"C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\cppwinrt" ..\..\module\settings\f_settings.h -o debug\moc_f_settings.cpp
@@ -2199,7 +2207,10 @@ debug\messagecenter.obj: ..\..\messagecenter.cpp ..\..\messagecenter.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qregularexpression.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qurl.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\quuid.h \
-		C:\Qt\6.5.3\msvc2019_64\include\QtCore\QDebug
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\QDebug \
+		..\..\module\settings\f_settings.h \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\QSettings \
+		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qsettings.h
 
 debug\f_file_manager.obj: ..\..\module\file\f_file_manager.cpp ..\..\module\file\f_file_manager.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\QByteArray \
@@ -2597,7 +2608,6 @@ debug\f_settings.obj: ..\..\module\settings\f_settings.cpp ..\..\module\settings
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qdatetime.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qcalendar.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qlocale.h \
-		..\..\f_common.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\QJsonObject \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qjsonobject.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qjsonvalue.h \
@@ -2606,6 +2616,7 @@ debug\f_settings.obj: ..\..\module\settings\f_settings.cpp ..\..\module\settings
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qregularexpression.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qurl.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\quuid.h \
+		..\..\f_common.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\QDir \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qdir.h \
 		C:\Qt\6.5.3\msvc2019_64\include\QtCore\qfile.h \

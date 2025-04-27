@@ -42,11 +42,16 @@ void FSettings::defaultValueInit()
 
     m_settings->setValue("deviceID", "uav_" + timestamp);
     m_settings->setValue("groupID", "stevens.cs");
+    m_settings->setValue("networkAutoSetup", true);
 
     m_settings->beginGroup("MQTT_Client");
-    m_settings->setValue("enable", false);
+    m_settings->setValue("enable", true);
     m_settings->setValue("ip", "127.0.0.1");
     m_settings->setValue("port", 1883);
+    m_settings->setValue("autoTest", true);
+    m_settings->setValue("autoTest_interval", 1000);
+    m_settings->setValue("autoTest_topic", "test/topic");
+    m_settings->setValue("autoTest_content", "Hello");
     m_settings->endGroup();
 
     m_settings->beginGroup("MQTT_Server");
@@ -56,15 +61,19 @@ void FSettings::defaultValueInit()
     m_settings->endGroup();
 
     m_settings->beginGroup("ZeroMQ_Client");
-    m_settings->setValue("enable", false);
+    m_settings->setValue("enable", true);
     m_settings->setValue("mode", 4);
     m_settings->setValue("ip", "127.0.0.1");
     m_settings->setValue("port", 5555);
+    m_settings->setValue("autoTest", true);
+    m_settings->setValue("autoTest_interval", 1000);
+    m_settings->setValue("autoTest_content", "Hello");
     m_settings->endGroup();
 
     m_settings->beginGroup("ZeroMQ_Server");
-    m_settings->setValue("enable", false);
+    m_settings->setValue("enable", true);
     m_settings->setValue("mode", 4);
+    m_settings->setValue("ip", "localhost");
     m_settings->setValue("port", 5555);
     m_settings->endGroup();
 
@@ -97,24 +106,58 @@ QString FSettings::groupId()
     return m_settings->value("groupID").toString();
 }
 
-int FSettings::getZmqClientMode()
+bool FSettings::networkAutoSetup()
 {
-    return m_settings->value("ZeroMQ_Client/mode").toInt();
+    return m_settings->value("networkAutoSetup").toBool();
 }
 
-int FSettings::getZmqClientPort()
+QJsonObject FSettings::getMqttObject()
 {
-    return m_settings->value("ZeroMQ_Client/port").toInt();
+    QJsonObject obj;
+
+    QJsonObject clientObj;
+    clientObj.insert("enable", m_settings->value("MQTT_Client/enable").toBool());
+    clientObj.insert("ip", m_settings->value("MQTT_Client/ip").toString());
+    clientObj.insert("port", m_settings->value("MQTT_Client/port").toInt());
+    clientObj.insert("mode", m_settings->value("MQTT_Client/mode").toInt());
+    clientObj.insert("autoTest", m_settings->value("MQTT_Client/autoTest").toBool());
+    clientObj.insert("autoTest_interval", m_settings->value("MQTT_Client/autoTest_interval").toInt());
+    clientObj.insert("autoTest_topic", m_settings->value("MQTT_Client/autoTest_topic").toString());
+    clientObj.insert("autoTest_content", m_settings->value("MQTT_Client/autoTest_content").toString());
+    obj.insert("client", clientObj);
+
+    QJsonObject serverObj;
+    serverObj.insert("enable", m_settings->value("MQTT_Server/enable").toBool());
+    serverObj.insert("ip", m_settings->value("MQTT_Server/ip").toString());
+    serverObj.insert("port", m_settings->value("MQTT_Server/port").toInt());
+    serverObj.insert("mode", m_settings->value("MQTT_Server/mode").toInt());
+    obj.insert("server", serverObj);
+
+    return obj;
 }
 
-int FSettings::getZmqServerMode()
+QJsonObject FSettings::getZmqObject()
 {
-    return m_settings->value("ZeroMQ_Server/mode").toInt();
-}
+    QJsonObject obj;
 
-int FSettings::getZmqServerPort()
-{
-    return m_settings->value("ZeroMQ_Server/port").toInt();
+    QJsonObject clientObj;
+    clientObj.insert("enable", m_settings->value("ZeroMQ_Client/enable").toBool());
+    clientObj.insert("ip", m_settings->value("ZeroMQ_Client/ip").toString());
+    clientObj.insert("port", m_settings->value("ZeroMQ_Client/port").toInt());
+    clientObj.insert("mode", m_settings->value("ZeroMQ_Client/mode").toInt());
+    clientObj.insert("autoTest", m_settings->value("ZeroMQ_Client/autoTest").toBool());
+    clientObj.insert("autoTest_interval", m_settings->value("ZeroMQ_Client/autoTest_interval").toInt());
+    clientObj.insert("autoTest_content", m_settings->value("ZeroMQ_Client/autoTest_content").toString());
+    obj.insert("client", clientObj);
+
+    QJsonObject serverObj;
+    serverObj.insert("enable", m_settings->value("ZeroMQ_Server/enable").toBool());
+    serverObj.insert("ip", m_settings->value("ZeroMQ_Server/ip").toString());
+    serverObj.insert("port", m_settings->value("ZeroMQ_Server/port").toInt());
+    serverObj.insert("mode", m_settings->value("ZeroMQ_Server/mode").toInt());
+    obj.insert("server", serverObj);
+
+    return obj;
 }
 
 quint32 FSettings::logindex()

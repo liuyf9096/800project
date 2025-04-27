@@ -38,20 +38,32 @@ namespace {
 #ifdef QT_MOC_HAS_STRINGDATA
 struct qt_meta_stringdata_CLASSMessageCenterENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSMessageCenterENDCLASS = QtMocHelpers::stringData(
-    "MessageCenter"
+    "MessageCenter",
+    "onZmqTimeout_slot",
+    "",
+    "onMqttTimeout_slot"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMessageCenterENDCLASS_t {
-    uint offsetsAndSizes[2];
+    uint offsetsAndSizes[8];
     char stringdata0[14];
+    char stringdata1[18];
+    char stringdata2[1];
+    char stringdata3[19];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMessageCenterENDCLASS_t::offsetsAndSizes) + ofs), len 
 Q_CONSTINIT static const qt_meta_stringdata_CLASSMessageCenterENDCLASS_t qt_meta_stringdata_CLASSMessageCenterENDCLASS = {
     {
-        QT_MOC_LITERAL(0, 13)   // "MessageCenter"
+        QT_MOC_LITERAL(0, 13),  // "MessageCenter"
+        QT_MOC_LITERAL(14, 17),  // "onZmqTimeout_slot"
+        QT_MOC_LITERAL(32, 0),  // ""
+        QT_MOC_LITERAL(33, 18)   // "onMqttTimeout_slot"
     },
-    "MessageCenter"
+    "MessageCenter",
+    "onZmqTimeout_slot",
+    "",
+    "onMqttTimeout_slot"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -63,12 +75,20 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMessageCenterENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
+
+ // slots: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    0,   26,    2, 0x08,    1 /* Private */,
+       3,    0,   27,    2, 0x08,    2 /* Private */,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -81,16 +101,26 @@ Q_CONSTINIT const QMetaObject MessageCenter::staticMetaObject = { {
     nullptr,
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSMessageCenterENDCLASS_t,
         // Q_OBJECT / Q_GADGET
-        QtPrivate::TypeAndForceComplete<MessageCenter, std::true_type>
+        QtPrivate::TypeAndForceComplete<MessageCenter, std::true_type>,
+        // method 'onZmqTimeout_slot'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onMqttTimeout_slot'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
 
 void MessageCenter::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    (void)_o;
-    (void)_id;
-    (void)_c;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        auto *_t = static_cast<MessageCenter *>(_o);
+        (void)_t;
+        switch (_id) {
+        case 0: _t->onZmqTimeout_slot(); break;
+        case 1: _t->onMqttTimeout_slot(); break;
+        default: ;
+        }
+    }
     (void)_a;
 }
 
@@ -110,6 +140,17 @@ void *MessageCenter::qt_metacast(const char *_clname)
 int MessageCenter::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 2)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 2;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 2)
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
+        _id -= 2;
+    }
     return _id;
 }
 QT_WARNING_POP

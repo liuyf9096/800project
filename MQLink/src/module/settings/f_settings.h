@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSettings>
 #include <QDateTime>
+#include <QJsonObject>
 
 class FSettings : public QObject
 {
@@ -17,12 +18,10 @@ public:
     QString deviceId();
     QString groupId();
 
-    /* Zmq */
-    int getZmqClientMode();
-    int getZmqClientPort();
+    bool networkAutoSetup();
 
-    int getZmqServerMode();
-    int getZmqServerPort();
+    QJsonObject getMqttObject();
+    QJsonObject getZmqObject();
 
     /* Log */
     quint32 logindex();

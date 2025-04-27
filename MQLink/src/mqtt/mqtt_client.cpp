@@ -33,18 +33,18 @@ MqttClient::~MqttClient()
 
 bool MqttClient::connect(QString address, int port)
 {
-    if (mosquitto_connect(mosq, "localhost", port, 60) == MOSQ_ERR_SUCCESS) {
-        qDebug() << "Connected.";
+    if (mosquitto_connect(mosq, address.toUtf8().constData(), port, 60) == MOSQ_ERR_SUCCESS) {
+        qDebug() << "MqttClient Connected.";
         m_timer->start();
         return true;
     }
     return false;
 }
 
-bool MqttClient::connect(const std::string address, int port)
+bool MqttClient::connect_c(const std::string address, int port)
 {
     if (mosquitto_connect(mosq, address.c_str(), port, 60) == MOSQ_ERR_SUCCESS) {
-        qDebug() << "Connected.";
+        qDebug() << "MqttClient Connected.";
         m_timer->start();
         return true;
     }
@@ -64,7 +64,7 @@ void MqttClient::subscribe(QString topic)
     mosquitto_subscribe(mosq, nullptr, topic.toUtf8().constData(), 0);
 }
 
-void MqttClient::subscribe(const std::string topic)
+void MqttClient::subscribe_c(const std::string topic)
 {
     mosquitto_subscribe(mosq, nullptr, topic.c_str(), 0);
 }
@@ -76,7 +76,7 @@ void MqttClient::publish(QString topic, QString message)
     }
 }
 
-void MqttClient::publish(const std::string topic, const std::string message)
+void MqttClient::publish_c(const std::string topic, const std::string message)
 {
     if (mosq) {
         mosquitto_publish(mosq, nullptr, topic.c_str(), int(message.length()), message.c_str(), 0, false);
@@ -106,7 +106,7 @@ bool MqttClient::sendFileContent(QString topic, QString filePath)
     }
 }
 
-bool MqttClient::sendFileContent(const std::string topic, const std::string filePath)
+bool MqttClient::sendFileContent_c(const std::string topic, const std::string filePath)
 {
     QFile file(QString::fromStdString(filePath));
     if (!file.open(QIODevice::ReadOnly)) {
