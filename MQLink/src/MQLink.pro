@@ -48,19 +48,16 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+unix {
+    LIBS += -lzmq
+    LIBS += -lmosquitto
+}
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../zeromq/lib/ -llibzmq-mt-4_3_5
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../zeromq/debug/lib/ -llibzmq-mt-gd-4_3_5
 
 INCLUDEPATH += $$PWD/../../../../../zeromq/include
 DEPENDPATH += $$PWD/../../../../../zeromq/include
-
-
-# win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../zeromq/lib/ -llibzmq-mt-4_3_5
-# else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../zeromq/debug/lib/ -llibzmq-mt-gd-4_3_5
-
-# INCLUDEPATH += $$PWD/../../../../zeromq/include
-# DEPENDPATH += $$PWD/../../../../zeromq/include
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../../../Program Files/mosquitto/devel/' -lmosquitto
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../../../Program Files/mosquitto/devel/' -lmosquitto
