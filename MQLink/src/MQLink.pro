@@ -1,19 +1,8 @@
-QT += core mqtt
+QT += core
 
 CONFIG += c++17
 VERSION = 1.0.0
-CONFIG += skip_target_version_ext
-
-# DEFINES += INCLUDE_GUI
-
-contains(DEFINES, INCLUDE_GUI) {
-    QT += gui widgets
-
-    SOURCES += mainwindow.cpp
-    HEADERS += mainwindow.h
-} else {
-    CONFIG += cmdline
-}
+CONFIG += skip_target_version_ext cmdline
 
 SOURCES += \
     f_common.cpp \
@@ -45,10 +34,6 @@ HEADERS += \
     zmq/zmq_client.h \
     zmq/zmq_messager.h \
     zmq/zmq_server.h
-
-
-FORMS += \
-    mainwindow.ui
 
 INCLUDEPATH += \
     module \
