@@ -144,7 +144,7 @@ void onConnect(mosquitto *mosq, void *obj, int rc)
     if (rc == 0) {
         qDebug() << "Connected to MQTT broker";
 
-        mosquitto_subscribe(mosq, nullptr, "test/topic", 0);
+        // mosquitto_subscribe(mosq, nullptr, "test/topic", 0);
     } else {
         qCritical() << "Connection failed with code" << rc;
     }
