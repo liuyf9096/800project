@@ -1,0 +1,39 @@
+sudo fdisk -l
+sudo dd if=/dev/mmcblk0 of=/dev/sda bs=4M status=progress
+
+pi_1:169.254.249.125
+pi_2:169.254.204.55
+pi_3:169.254.81.11
+
+docker ps -a
+docker start container_name
+docker restart container_name
+docker stop container_name
+docker rm container_name
+docker rmi image_name
+
+docker exec -it container_name bash
+
+docker logs container_name/id
+docker top container_name/id
+docker inspect container_name/id
+docker stop $(docker ps -q)
+
+docker images
+docker build -t image_name:tag dockerfile_path
+
+docker network ls
+docker network create network_name
+docker network connect network_name container_name/id
+docker network disconnect nerwork_name container_name/id
+
+docker run // create a new container
+--rm // auto delete container after using
+--name // set container name
+
+docker run -p host_port:container-port image_name
+docker run -p 5555:5555 -p 80:8080 mqlink
+
+docker rename old new
+
+
