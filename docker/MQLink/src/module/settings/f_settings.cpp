@@ -162,8 +162,9 @@ QJsonObject FSettings::getZmqObject()
 
 quint32 FSettings::logindex()
 {
-    quint32 index = m_settings->value("Log/index").toUInt() + 1;
-    m_settings->setValue("Log/index", index);
+    quint32 index = m_settings->value("Logger/index").toUInt() + 1;
+    m_settings->setValue("Logger/index", index);
+    m_settings->sync();
     return index;
 }
 

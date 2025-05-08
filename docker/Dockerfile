@@ -1,4 +1,3 @@
-
 FROM arm32v7/debian:bullseye-slim
 # FROM debian:bullseye-slim
 
@@ -27,4 +26,6 @@ RUN echo "Completed"
 
 EXPOSE 5555
 
-CMD ["./MQLink"]
+# CMD ["bash"]
+# CMD ["./MQLink"]
+CMD ["sleep", "infinity"]

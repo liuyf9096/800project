@@ -20,6 +20,9 @@ docker inspect container_name/id
 docker stop $(docker ps -q)
 
 docker images
+
+docker system prune
+docker build --no-cache -t your_image .
 docker build -t image_name:tag dockerfile_path
 
 docker network ls
@@ -31,9 +34,17 @@ docker run // create a new container
 --rm // auto delete container after using
 --name // set container name
 
-docker run -p host_port:container-port image_name
+docker run -itd -p host_port:container-port image_name
 docker run -p 5555:5555 -p 80:8080 mqlink
+
+docker run -itd -p 5555:5555 -v /home/pi/Yufei/docker/MQLink/output/config:/workspace/output/config -v /home/pi/Yufei/docker/MQLink/output/log:/workspace/output/log --name mqlinkc mqlink_image
+
+docker exec -it mqlinkc bash
 
 docker rename old new
 
+ls -l yourfile.txt
+sudo chown yourusername:yourusername yourfile.txt
+
+sudo chmod -R a+rw /host/path
 
