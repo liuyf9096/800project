@@ -24,6 +24,8 @@ private:
     Q_DISABLE_COPY(MessageCenter)
     ~MessageCenter();
 
+    QString m_id;
+
     QTimer *zmqTimer;
     QTimer *mqttTimer;
 
