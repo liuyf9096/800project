@@ -1,4 +1,5 @@
 #include "zmq_messager.h"
+#include "f_common.h"
 #include <QDebug>
 
 ZmqMessager *ZmqMessager::GetInstance()
@@ -20,6 +21,7 @@ ZmqMessager::ZmqMessager(QObject *parent)
 {
     client = new ZmqClient(this);
     server = new ZmqServer(this);
+    server->setDownloadPath(FCommon::getDownloadsPath());
 
     autoTestTimer = new QTimer(this);
     autoTestTimer->setInterval(1000);

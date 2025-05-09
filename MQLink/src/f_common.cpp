@@ -91,6 +91,21 @@ QString FCommon::getPath(const QString &dirName)
     return dir.absolutePath();
 }
 
+QString FCommon::getDownloadsPath()
+{
+    QString downloadsPath = QDir::currentPath() + "/downloads";
+    QDir dir(downloadsPath);
+
+    if (!dir.exists()) {
+        if (QDir().mkpath(downloadsPath)) {
+            qDebug() << "Created downloads directory at:" << downloadsPath;
+        } else {
+            qWarning() << "Failed to create downloads directory at:" << downloadsPath;
+        }
+    }
+    return dir.absolutePath();
+}
+
 QString FCommon::checkIpAddress(const QString &address)
 {
     static QRegularExpression rx("((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}");
