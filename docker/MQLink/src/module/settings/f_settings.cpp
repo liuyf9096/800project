@@ -45,7 +45,7 @@ void FSettings::defaultValueInit()
     m_settings->setValue("networkAutoSetup", true);
 
     m_settings->beginGroup("MQTT_Client");
-    m_settings->setValue("enable", true);
+    m_settings->setValue("enable", false);
     m_settings->setValue("ip", "127.0.0.1");
     m_settings->setValue("port", 1883);
     m_settings->setValue("autoTest", true);
@@ -66,8 +66,13 @@ void FSettings::defaultValueInit()
     m_settings->setValue("ip", "127.0.0.1");
     m_settings->setValue("port", 5555);
     m_settings->setValue("autoTest", true);
+    m_settings->setValue("testType", "text");
     m_settings->setValue("autoTest_interval", 1000);
     m_settings->setValue("autoTest_content", "Hello");
+    m_settings->setValue("send_file_number", 0);
+    m_settings->setValue("send_filepath_1", "");
+    m_settings->setValue("send_filepath_2", "");
+    m_settings->setValue("send_filepath_3", "");
     m_settings->endGroup();
 
     m_settings->beginGroup("ZeroMQ_Server");
@@ -78,7 +83,7 @@ void FSettings::defaultValueInit()
     m_settings->endGroup();
 
     m_settings->beginGroup("Logger");
-    m_settings->setValue("Logger_enable", false);
+    m_settings->setValue("enable", false);
     m_settings->setValue("index", 0);
     m_settings->setValue("content_type", 0);
     m_settings->setValue("max_logfile_count", 20);
@@ -146,8 +151,13 @@ QJsonObject FSettings::getZmqObject()
     clientObj.insert("port", m_settings->value("ZeroMQ_Client/port").toInt());
     clientObj.insert("mode", m_settings->value("ZeroMQ_Client/mode").toInt());
     clientObj.insert("autoTest", m_settings->value("ZeroMQ_Client/autoTest").toBool());
+    clientObj.insert("testType", m_settings->value("ZeroMQ_Client/testType").toString());
     clientObj.insert("autoTest_interval", m_settings->value("ZeroMQ_Client/autoTest_interval").toInt());
     clientObj.insert("autoTest_content", m_settings->value("ZeroMQ_Client/autoTest_content").toString());
+    clientObj.insert("send_file_number", m_settings->value("ZeroMQ_Client/send_file_number").toInt());
+    clientObj.insert("send_filepath_1", m_settings->value("ZeroMQ_Client/send_filepath_1").toString());
+    clientObj.insert("send_filepath_2", m_settings->value("ZeroMQ_Client/send_filepath_2").toString());
+    clientObj.insert("send_filepath_3", m_settings->value("ZeroMQ_Client/send_filepath_3").toString());
     obj.insert("client", clientObj);
 
     QJsonObject serverObj;
@@ -170,7 +180,7 @@ quint32 FSettings::logindex()
 
 bool FSettings::isLogServerEnable()
 {
-    return m_settings->value("Logger/Logger_enable").toBool();
+    return m_settings->value("Logger/enable").toBool();
 }
 
 int FSettings::logContentType()

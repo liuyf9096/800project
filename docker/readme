@@ -37,7 +37,7 @@ docker run // create a new container
 docker run -itd -p host_port:container-port image_name
 docker run -p 5555:5555 -p 80:8080 mqlink
 
-docker run -itd -p 5555:5555 -v /home/pi/Yufei/docker/MQLink/output/config:/workspace/output/config -v /home/pi/Yufei/docker/MQLink/output/log:/workspace/output/log --name mqlinkc mqlink_image
+docker run -itd -p 5555:5555 -v /home/pi/Yufei/docker/MQLink/output/config:/workspace/output/config -v /home/pi/Yufei/docker/MQLink/output/log:/workspace/output/log -v /home/pi/Yufei/docker/MQLink/output/downloads/log:/workspace/output/downloads --name mqlinkc mqlink_image
 
 docker exec -it mqlinkc bash
 

@@ -1,0 +1,36 @@
+# 阶段 1：构建阶段
+FROM arm32v7/debian:bullseye-slim AS builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    qt5-qmake \
+    qtbase5-dev \
+    libzmq5-dev \
+    libmosquitto-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+COPY ./MQLink /workspace
+
+RUN qmake /workspace/src/MQLink.pro -o /workspace/src/Makefile \
+    && make -C /workspace/src \
+    && make -C /workspace/src clean
+
+# 阶段 2：精简运行环境
+FROM arm32v7/debian:bullseye-slim
+
+RUN apt-get update && apt-get install -y \
+    libqt5core5a \
+    libqt5network5 \
+    libzmq5 \
+    libmosquitto1 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+COPY --from=builder /workspace/src/MQLink /workspace/output/MQLink
+
+EXPOSE 5555
+
+CMD ["sleep", "infinity"]
