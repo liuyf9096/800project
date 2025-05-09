@@ -57,7 +57,7 @@ void ZmqClient::connectServer(QString address)
     m_socket.connect(address.toLocal8Bit().constData());
     m_timer->start();
     m_serverAddress = address;
-    qDebug() << "Connecting to server at" << m_serverAddress << ".OK";
+    qDebug() << "Connecting to server at" << m_serverAddress << " OK.";
 }
 
 void ZmqClient::disconnect()

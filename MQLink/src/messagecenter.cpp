@@ -3,7 +3,10 @@
 #include <QDateTime>
 #include <QJsonObject>
 #include <QDebug>
+
 #include "settings/f_settings.h"
+#include "mqtt/mqtt_messager.h"
+#include "zmq/zmq_messager.h"
 
 MessageCenter *MessageCenter::GetInstance()
 {
@@ -15,8 +18,6 @@ MessageCenter::MessageCenter(QObject *parent)
     : QObject{parent}
 {
     // qDebug() << __FUNCTION__ << QThread::currentThread();
-
-    _timer_init();
 
     mqttClient = MqttMessager::GetInstance()->client;
     mqttServer = MqttMessager::GetInstance()->server;
@@ -33,7 +34,7 @@ MessageCenter::MessageCenter(QObject *parent)
 
 MessageCenter::~MessageCenter()
 {
-    qDebug() << __FUNCTION__ << QThread::currentThread();
+    qDebug() << __FUNCTION__ /*<< QThread::currentThread()*/;
 }
 
 void MessageCenter::networkAutoSetup()
@@ -43,85 +44,10 @@ void MessageCenter::networkAutoSetup()
     QJsonObject mqttObj = FSettings::GetInstance()->getMqttObject();
     QJsonObject zmqObj = FSettings::GetInstance()->getZmqObject();
 
-    QJsonObject mqttClientObj = mqttObj.value("client").toObject();
-    QJsonObject mqttServerObj = mqttObj.value("server").toObject();
+    MqttMessager::GetInstance()->setAutoTest(mqttObj);
+    ZmqMessager::GetInstance()->setAutoTest(zmqObj);
 
-    QJsonObject zmqServerObj = zmqObj.value("server").toObject();
-    QJsonObject zmqClientObj = zmqObj.value("client").toObject();
-
-    qDebug() << mqttClientObj << mqttServerObj << zmqServerObj << zmqClientObj;
-
-    /* Zmq Server*/
-    bool zmqServerEn = zmqServerObj.value("enable").toBool();
-    if (zmqServerEn == true) {
-        int port = zmqServerObj.value("port").toInt();
-
-        zmqServer->bindAddress(QString("tcp://*:%1").arg(port));
-    }
-
-    /* Zmq Client*/
-    bool zmqClientEn = zmqClientObj.value("enable").toBool();
-    if (zmqClientEn) {
-        QString ip = zmqClientObj.value("ip").toString();
-        int port = zmqClientObj.value("port").toInt();
-
-        zmqClient->connectServer(QString("tcp://%1:%2").arg(ip).arg(port));
-        bool autoTest = zmqClientObj.value("autoTest").toBool();
-        if (autoTest) {
-            int interval = zmqClientObj.value("autoTest_interval").toInt();
-            m_zmqAutoTest = true;
-            zmqTimer->start(interval);
-            zmqATContent = zmqClientObj.value("autoTest_content").toString();
-            qDebug() << "Zmq Start Auto Test.";
-        }
-    }
-
-    /* Mqtt Server*/
-    bool mqttServerEn = mqttServerObj.value("enable").toBool();
-    if (mqttServerEn == true) {
-        // int port = mqttServerObj.value("port").toInt();
-        // MqttMessager::GetInstance()->server;
-    }
-
-    /* Mqtt Client*/
-    bool mqttClientEn = mqttClientObj.value("enable").toBool();
-    if (mqttClientEn) {
-        QString ip = mqttClientObj.value("ip").toString();
-        int port = mqttClientObj.value("port").toInt();
-
-        mqttClient->connect(ip, port);
-        bool autoTest = mqttClientObj.value("autoTest").toBool();
-        if (autoTest) {
-            int interval = mqttClientObj.value("autoTest_interval").toInt();
-            m_mqttAutoTest = true;
-            mqttTimer->start(interval);
-            mqttATTopic = mqttClientObj.value("autoTest_topic").toString();
-            mqttATContent = mqttClientObj.value("autoTest_content").toString();
-            qDebug() << "Mqtt Start Auto Test.";
-        }
-    }
-}
-
-void MessageCenter::_timer_init()
-{
-    zmqTimer = new QTimer(this);
-    mqttTimer = new QTimer(this);
-
-    connect(zmqTimer, &QTimer::timeout, this, &MessageCenter::onZmqTimeout_slot);
-    connect(mqttTimer, &QTimer::timeout, this, &MessageCenter::onMqttTimeout_slot);
-}
-
-void MessageCenter::onZmqTimeout_slot()
-{
-    static int n = 1;
-    QString current_time = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
-    zmqClient->sendMessage(QString("[%1](%2)%3: %4").arg(current_time, m_id).arg(n++).arg(zmqATContent));
-}
-
-void MessageCenter::onMqttTimeout_slot()
-{
-    static int n = 1;
-    QString current_time = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
-    mqttClient->publish(mqttATTopic, QString("[%1](%2): %3").arg(current_time, m_id).arg(n++).arg(mqttATContent));
+    MqttMessager::GetInstance()->setDeviceId(m_id);
+    ZmqMessager::GetInstance()->setDeviceId(m_id);
 }
 
