@@ -24,6 +24,8 @@ MessageCenter::MessageCenter(QObject *parent)
     zmqClient = ZmqMessager::GetInstance()->client;
     zmqServer = ZmqMessager::GetInstance()->server;
 
+    m_id = FSettings::GetInstance()->deviceId();
+
     if (FSettings::GetInstance()->networkAutoSetup() == true) {
         networkAutoSetup();
     }
@@ -111,11 +113,15 @@ void MessageCenter::_timer_init()
 
 void MessageCenter::onZmqTimeout_slot()
 {
-    zmqClient->sendMessage(zmqATContent);
+    static int n = 1;
+    QString current_time = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+    zmqClient->sendMessage(QString("[%1](%2)%3: %4").arg(current_time, m_id).arg(n++).arg(zmqATContent));
 }
 
 void MessageCenter::onMqttTimeout_slot()
 {
-    mqttClient->publish(mqttATTopic, mqttATContent);
+    static int n = 1;
+    QString current_time = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+    mqttClient->publish(mqttATTopic, QString("[%1](%2): %3").arg(current_time, m_id).arg(n++).arg(mqttATContent));
 }
 
