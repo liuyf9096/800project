@@ -1,4 +1,5 @@
 #include "mqtt_messager.h"
+#include "settings/f_settings.h"
 
 MqttMessager *MqttMessager::GetInstance()
 {
@@ -17,7 +18,9 @@ MqttMessager *MqttMessager::GetInstance()
 MqttMessager::MqttMessager(QObject *parent)
     : QObject{parent}
 {
-    client = new MqttClient(this);
+    m_id = FSettings::GetInstance()->deviceId();
+
+    client = new MqttClient(m_id, this);
     server = new MqttServer(this);
 
     autoTestTimer = new QTimer(this);

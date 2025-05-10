@@ -19,13 +19,13 @@ MessageCenter::MessageCenter(QObject *parent)
 {
     // qDebug() << __FUNCTION__ << QThread::currentThread();
 
+    m_id = FSettings::GetInstance()->deviceId();
+
     mqttClient = MqttMessager::GetInstance()->client;
     mqttServer = MqttMessager::GetInstance()->server;
 
     zmqClient = ZmqMessager::GetInstance()->client;
     zmqServer = ZmqMessager::GetInstance()->server;
-
-    m_id = FSettings::GetInstance()->deviceId();
 
     if (FSettings::GetInstance()->networkAutoSetup() == true) {
         networkAutoSetup();
@@ -46,8 +46,5 @@ void MessageCenter::networkAutoSetup()
 
     MqttMessager::GetInstance()->setAutoTest(mqttObj);
     ZmqMessager::GetInstance()->setAutoTest(zmqObj);
-
-    MqttMessager::GetInstance()->setDeviceId(m_id);
-    ZmqMessager::GetInstance()->setDeviceId(m_id);
 }
 

@@ -1,4 +1,5 @@
 #include "mqtt_client.h"
+#include "f_common.h"
 #include <QFile>
 #include <QFileInfo>
 #include <QDebug>
@@ -6,7 +7,7 @@
 static void onConnect(struct mosquitto *mosq, void *obj, int rc);
 static void onMessage(struct mosquitto *mosq, void *obj, const struct mosquitto_message *msg);
 
-MqttClient::MqttClient(QObject *parent)
+MqttClient::MqttClient(QString id, QObject *parent)
     : QObject{parent}
 {
     m_timer = new QTimer(this);
@@ -14,7 +15,7 @@ MqttClient::MqttClient(QObject *parent)
     QObject::connect(m_timer, &QTimer::timeout, this, &MqttClient::onTimeout_slot);
 
     mosquitto_lib_init();
-    mosq = mosquitto_new("qt-mqtt-client", true, this);
+    mosq = mosquitto_new(id.toUtf8().constData(), true, this);
     if (mosq) {
         mosquitto_connect_callback_set(mosq, onConnect);
         mosquitto_message_callback_set(mosq, onMessage);
@@ -143,6 +144,10 @@ void onConnect(mosquitto *mosq, void *obj, int rc)
     Q_UNUSED(obj);
     if (rc == 0) {
         qDebug() << "Connected to MQTT broker";
+
+        QString ip = FCommon::getLocalIPv4Address();
+        QByteArray payload = ip.toUtf8();
+        mosquitto_publish(mosq, nullptr, "device/ip", payload.size(), payload.constData(), 0, false);
 
         // mosquitto_subscribe(mosq, nullptr, "test/topic", 0);
     } else {

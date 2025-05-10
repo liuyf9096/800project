@@ -16,7 +16,6 @@ public:
     MqttClient *client;
     MqttServer *server;
 
-    void setDeviceId(const QString &id) { m_id = id; }
     void setAutoTest(QJsonObject obj);
 
 private:
