@@ -63,6 +63,8 @@ void ZmqServer::bindAddress(QString address)
 
 void ZmqServer::sendMessage(QString clientId, QString message)
 {
+    Q_UNUSED(clientId)
+
     if (m_clientIdentity.size() == 0) {
         return;
     }

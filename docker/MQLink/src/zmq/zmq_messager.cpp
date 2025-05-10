@@ -24,7 +24,7 @@ ZmqMessager::ZmqMessager(QObject *parent)
 
     client = new ZmqClient(this);
     server = new ZmqServer(this);
-    server->setDownloadPath(FCommon::getDownloadsPath());
+    server->setDownloadPath(FCommon::getPath("downloads"));
 
     autoTestTimer = new QTimer(this);
     autoTestTimer->setInterval(1000);

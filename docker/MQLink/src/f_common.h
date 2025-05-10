@@ -24,7 +24,6 @@ public:
     /* path */
     static QString appPath();
     static QString getPath(const QString &dirName);
-    static QString getDownloadsPath();
 
     static QString checkIpAddress(const QString &address);
 

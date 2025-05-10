@@ -1,6 +1,9 @@
 sudo fdisk -l
 sudo dd if=/dev/mmcblk0 of=/dev/sda bs=4M status=progress
 
+sudo date -s "2025-05-10 10:58:00"
+
+pc:169.254.77.196
 pi_1:169.254.249.125
 pi_2:169.254.204.55
 pi_3:169.254.81.11
@@ -22,6 +25,7 @@ docker stop $(docker ps -q)
 docker images
 
 docker system prune
+docker build -t mqlink_image .
 docker build --no-cache -t mqlink_image .
 docker build -t image_name:tag dockerfile_path
 
@@ -37,7 +41,20 @@ docker run // create a new container
 docker run -itd -p host_port:container-port image_name
 docker run -p 5555:5555 -p 80:8080 mqlink
 
-docker run -itd -p 5555:5555 -v /home/pi/Yufei/docker/MQLink/output/config:/workspace/output/config -v /home/pi/Yufei/docker/MQLink/output/log:/workspace/output/log -v /home/pi/Yufei/docker/MQLink/output/downloads/log:/workspace/output/downloads --name mqlinkc mqlink_image
+docker run -itd -p 5555:5555 -v /home/pi/Yufei/docker/MQLink/output/config:/workspace/output/config -v /home/pi/Yufei/docker/MQLink/output/log:/workspace/output/log -v /home/pi/Yufei/docker/MQLink/output/downloads:/workspace/output/downloads -e HOST_IP="$(hostname -I | awk '{print $1}')" --name mqlinkc mqlink_image
+
+docker run -itd \
+  -p 5555:5555 \
+  -v /home/pi/Yufei/docker/MQLink/output/config:/workspace/output/config \
+  -v /home/pi/Yufei/docker/MQLink/output/log:/workspace/output/log \
+  -v /home/pi/Yufei/docker/MQLink/output/downloads:/workspace/output/downloads \
+  -e HOST_IP="$(hostname -I | awk '{print $1}')" \
+  --name mqlinkc \
+  --restart=unless-stopped \
+  mqlink_image
+
+docker run -itd -p 5555:5555 -v /home/pi/Yufei/docker/MQLink:/workspace:rw --name mqlinkc mqlink_image
+docker run -e HOST_IP=$(hostname -I | awk '{print $1}') ...
 
 docker exec -it mqlinkc bash
 
@@ -48,4 +65,17 @@ sudo chown yourusername:yourusername yourfile.txt
 sudo chown pi:pi config.ini
 
 sudo chmod -R a+rw /host/path
+
+scp  -r .\workspace\docker\* pi@169.254.81.11:/home/pi/Yufei/docker/
+
+docker run -itd \
+  -v /home/pi/Yufei/docker/MQLink:/workspace \
+  -p 5555:5555 \
+  -e HOST_IP="$(hostname -I | awk '{print $1}')" \
+  --name mqlinkc \
+  mqlink_image
+
+cd /workspace/src
+qmake MQLink.pro -o Makefile
+make
 

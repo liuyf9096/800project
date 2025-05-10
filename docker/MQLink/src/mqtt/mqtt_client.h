@@ -27,6 +27,8 @@ public:
     bool sendFileContent(QString topic, QString filePath);
     bool sendFileContent_c(const std::string topic, const std::string filePath);
 
+    QString m_id;
+
 signals:
     void onReceiveMessage_signal(QString topic, QString message);
     void onReceiveRawData_signal(QString topic, QByteArray data);

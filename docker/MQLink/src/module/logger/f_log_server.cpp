@@ -209,6 +209,8 @@ SetFileAttributes((LPCWSTR)(filePath.unicode()), FILE_ATTRIBUTE_HIDDEN);    //#i
 QString FLogServerPrivate::creatLogFile(quint64 index)
 {
     QDir dir(FCommon::getPath("log"));
+    qDebug() << __FUNCTION__ << dir.absolutePath();
+
     if (dir.exists()) {
         QString dataTime = QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss");
         QString fileName = QString("%1_%2_%3.log").arg(m_logFileTitle).arg(index, 5, 10, QChar('0')).arg(dataTime);
@@ -222,6 +224,8 @@ QString FLogServerPrivate::creatLogFile(quint64 index)
 
 void FLogServerPrivate::removeRedundantLogFile()
 {
+    qDebug() << __FUNCTION__;
+
     QDir dir(FCommon::getPath("log"));
 
     QFileInfoList list = dir.entryInfoList(QStringList() << QString("%1_*.log").arg(m_logFileTitle),
