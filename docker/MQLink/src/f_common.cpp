@@ -5,6 +5,8 @@
 #include <QDir>
 #include <QDateTime>
 #include <QRegularExpression>
+#include <QNetworkInterface>
+#include <QNetworkAddressEntry>
 #include <QDebug>
 
 static const QString AppName = "MQLink";
@@ -274,4 +276,31 @@ bool FCommon::setConfigFileValue(const QString &key1, const QString &key2, const
         }
     }
     return false;
+}
+
+QString FCommon::getLocalIPv4Address()
+{
+    const QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
+
+    for (const QNetworkInterface &interface : interfaces) {
+        QString name = interface.humanReadableName();
+        if (!(interface.flags() & QNetworkInterface::IsUp) ||
+            !(interface.flags() & QNetworkInterface::IsRunning) ||
+            (interface.flags() & QNetworkInterface::IsLoopBack))
+            continue;
+
+        for (const QNetworkAddressEntry &entry : interface.addressEntries()) {
+            QHostAddress ip = entry.ip();
+            if (ip.protocol() == QAbstractSocket::IPv4Protocol) {
+                // if (name.contains("eth") || name.contains("en") || name.contains("wlan")) {
+                //     return ip.toString();
+                // }
+                if (name.contains("eth")) {
+                    return ip.toString();
+                }
+            }
+        }
+    }
+
+    return QString();
 }

@@ -22,7 +22,7 @@ docker stop $(docker ps -q)
 docker images
 
 docker system prune
-docker build --no-cache -t your_image .
+docker build --no-cache -t mqlink_image .
 docker build -t image_name:tag dockerfile_path
 
 docker network ls
@@ -43,8 +43,9 @@ docker exec -it mqlinkc bash
 
 docker rename old new
 
-ls -l yourfile.txt
+ls -l config.ini
 sudo chown yourusername:yourusername yourfile.txt
+sudo chown pi:pi config.ini
 
 sudo chmod -R a+rw /host/path
 

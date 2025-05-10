@@ -45,6 +45,8 @@ public:
     static bool setConfigFileValue(const QString &key1, const QString &key2, const QString &key3, const QJsonValue &value3);
     static bool setConfigFileValue(const QString &key1, const QString &key2, const QString &key3, const QString &key4, const QJsonValue &value4);
 
+    static QString getLocalIPv4Address();
+
 private:
     explicit FCommon(QObject *parent = nullptr);
     Q_DISABLE_COPY(FCommon)

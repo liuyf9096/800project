@@ -11,7 +11,7 @@ class MqttClient : public QObject
 
     struct mosquitto *mosq = nullptr;
 public:
-    explicit MqttClient(QObject *parent = nullptr);
+    explicit MqttClient(QString id, QObject *parent = nullptr);
     ~MqttClient();
 
     bool connect(QString address, int port = 1883);

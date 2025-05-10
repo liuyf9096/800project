@@ -1,5 +1,6 @@
 QT += core
 QT -= gui
+QT += network
 
 CONFIG += c++17 cmdline
 VERSION = 1.0.0

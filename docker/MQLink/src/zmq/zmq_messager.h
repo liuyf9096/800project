@@ -16,7 +16,6 @@ public:
     ZmqClient *client;
     ZmqServer *server;
 
-    void setDeviceId(const QString &id) { m_id = id; }
     void setAutoTest(QJsonObject obj);
 
 private:

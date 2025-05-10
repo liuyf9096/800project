@@ -1,5 +1,6 @@
 #include "zmq_messager.h"
 #include "f_common.h"
+#include "settings/f_settings.h"
 #include <QDebug>
 
 ZmqMessager *ZmqMessager::GetInstance()
@@ -19,6 +20,8 @@ ZmqMessager *ZmqMessager::GetInstance()
 ZmqMessager::ZmqMessager(QObject *parent)
     : QObject{parent}
 {
+    m_id = FSettings::GetInstance()->deviceId();
+
     client = new ZmqClient(this);
     server = new ZmqServer(this);
     server->setDownloadPath(FCommon::getDownloadsPath());
