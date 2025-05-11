@@ -1,0 +1,21 @@
+{
+	"autotest": {
+		"mqtt": {
+			"sendContent": {
+				"interval": 1000,
+				"content": [
+					"1.txt",
+					"2.txt"
+				]
+			},
+			"sendMessage": {
+				"interval": 1000,
+				"content": [
+					"1.txt",
+					"2.txt"
+				]
+			}
+		},
+		"client": {}
+	}
+}

@@ -1,0 +1,56 @@
+{
+	"mqtt": {
+		"client": {
+			"enable": true,
+			"address": "127.0.0.1",
+			"port": 1883,
+			"autotest": {
+				"enable": true,
+				"interval": 1000,
+				"type": "text",
+				"topic": "test/topic",
+				"message": [
+					"Hello",
+					"World"
+				],
+				"filepath": [
+					"1.txt",
+					"2.txt"
+				]
+			},
+			"subscribe": [
+				"device/ip"
+			]
+		},
+		"server": {
+			"enable": false
+		}
+	},
+	"zmq": {
+		"client": {
+			"enable": true,
+			"address": "127.0.0.1",
+			"port": 5555,
+			"autotest": {
+				"enable": true,
+				"interval": 1000,
+				"type": "text",
+				"message": [
+					"Hello",
+					"World"
+				],
+				"filepath": [
+					"1.txt",
+					"2.txt"
+				]
+			},
+			"mode": 4
+		},
+		"server": {
+			"enable": true,
+			"address": "localhost",
+			"port": 5555,
+			"mode": 4
+		}
+	}
+}

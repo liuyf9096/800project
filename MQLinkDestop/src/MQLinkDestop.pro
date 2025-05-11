@@ -1,0 +1,77 @@
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += c++17
+
+# You can make your code fail to compile if it uses deprecated APIs.
+# In order to do so, uncomment the following line.
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+SOURCES += \
+    f_common.cpp \
+    f_init.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    messagecenter.cpp \
+    module/file/f_file_manager.cpp \
+    module/logger/f_log_server.cpp \
+    module/settings/f_settings.cpp \
+    mqtt/mqtt_client.cpp \
+    mqtt/mqtt_messager.cpp \
+    mqtt/mqtt_server.cpp \
+    uav_form.cpp \
+    zmq/zmq_client.cpp \
+    zmq/zmq_messager.cpp \
+    zmq/zmq_server.cpp
+
+HEADERS += \
+    f_common.h \
+    f_init.h \
+    mainwindow.h \
+    messagecenter.h \
+    module/file/f_file_manager.h \
+    module/logger/f_log_server.h \
+    module/logger/f_log_server_p.h \
+    module/settings/f_settings.h \
+    mqtt/mqtt_client.h \
+    mqtt/mqtt_messager.h \
+    mqtt/mqtt_server.h \
+    uav_form.h \
+    zmq/zmq_client.h \
+    zmq/zmq_messager.h \
+    zmq/zmq_server.h
+
+FORMS += \
+    mainwindow.ui \
+    uav_form.ui
+
+INCLUDEPATH += \
+    module \
+    zmq \
+    mqtt
+
+CONFIG(release, debug|release): DESTDIR = $$PWD/../output
+else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../output_d
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
+
+unix {
+    LIBS += -lzmq
+    LIBS += -lmosquitto
+}
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../zeromq/lib/ -llibzmq-mt-4_3_5
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../zeromq/debug/lib/ -llibzmq-mt-gd-4_3_5
+
+INCLUDEPATH += $$PWD/../../../../../zeromq/include
+DEPENDPATH += $$PWD/../../../../../zeromq/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../../../Program Files/mosquitto/devel/' -lmosquitto
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../../../Program Files/mosquitto/devel/' -lmosquitto
+
+win32:INCLUDEPATH += $$PWD/'../../../../../Program Files/mosquitto/devel'
+win32:DEPENDPATH += $$PWD/'../../../../../Program Files/mosquitto/devel'

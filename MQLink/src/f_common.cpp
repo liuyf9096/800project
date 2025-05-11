@@ -77,9 +77,9 @@ QString FCommon::releaseDate()
 QString FCommon::appPath()
 {
     QString path = QCoreApplication::applicationDirPath();
-    // if (path.endsWith("_d")) {
-    //     path.chop(2);
-    // }
+    if (path.endsWith("_d")) {
+        path.chop(2);
+    }
     return path;
 }
 
@@ -88,23 +88,9 @@ QString FCommon::getPath(const QString &dirName)
     QDir dir(appPath());
     if (!dir.exists(dirName)) {
         dir.mkdir(dirName);
+        qDebug() << "Create Directory:" << dir.absolutePath();
     }
     dir.cd(dirName);
-    return dir.absolutePath();
-}
-
-QString FCommon::getDownloadsPath()
-{
-    QString downloadsPath = QDir::currentPath() + "/downloads";
-    QDir dir(downloadsPath);
-
-    if (!dir.exists()) {
-        if (QDir().mkpath(downloadsPath)) {
-            qDebug() << "Created downloads directory at:" << downloadsPath;
-        } else {
-            qWarning() << "Failed to create downloads directory at:" << downloadsPath;
-        }
-    }
     return dir.absolutePath();
 }
 
@@ -280,6 +266,10 @@ bool FCommon::setConfigFileValue(const QString &key1, const QString &key2, const
 
 QString FCommon::getLocalIPv4Address()
 {
+    QString hostIp = QString::fromLocal8Bit(qgetenv("HOST_IP"));
+    return hostIp;
+
+#if 0
     const QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
 
     for (const QNetworkInterface &interface : interfaces) {
@@ -292,15 +282,27 @@ QString FCommon::getLocalIPv4Address()
         for (const QNetworkAddressEntry &entry : interface.addressEntries()) {
             QHostAddress ip = entry.ip();
             if (ip.protocol() == QAbstractSocket::IPv4Protocol) {
+                qDebug() << name << ip.toString();
                 // if (name.contains("eth") || name.contains("en") || name.contains("wlan")) {
                 //     return ip.toString();
                 // }
-                if (name.contains("eth")) {
+                // if (name.contains("eth")) {
+                //     return ip.toString();
+                // }
+            }
+        }
+    }
+
+    for (const QNetworkInterface &iface : QNetworkInterface::allInterfaces()) {
+        if (iface.name() == "eth0") {
+            for (const QNetworkAddressEntry &entry : iface.addressEntries()) {
+                QHostAddress ip = entry.ip();
+                if (ip.protocol() == QAbstractSocket::IPv4Protocol) {
                     return ip.toString();
                 }
             }
         }
     }
-
+#endif
     return QString();
 }

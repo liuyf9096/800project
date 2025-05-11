@@ -67,3 +67,11 @@ make
 ls
 make
 make clean
+ls
+cd MQLink
+ls
+cd src/
+ls
+make clean
+ls
+exit

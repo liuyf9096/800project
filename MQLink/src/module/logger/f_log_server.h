@@ -41,7 +41,7 @@ public:
 
     void setMaxLogFileCount(uint count);
     QString saveToTxtEnable(bool en, quint64 index = 0);
-    void setLogFileTitle(const QString &title); // default: 'RT' eg:title_yyyymmdd.txt
+    void setLogFileTitle(const QString &title); // default: eg:title_yyyymmdd.txt
     void setLogFilePath(const QDir &dir);       // obsolete default: AppDataLocation: 'C:/Users/<USER>/AppData/Roaming/<ORGAN>/<APP>'
 
     // void openLogFile();

@@ -9,6 +9,7 @@ static void onMessage(struct mosquitto *mosq, void *obj, const struct mosquitto_
 
 MqttClient::MqttClient(QString id, QObject *parent)
     : QObject{parent}
+    , m_id(id)
 {
     m_timer = new QTimer(this);
     m_timer->setInterval(50);
@@ -141,17 +142,21 @@ void MqttClient::onTimeout_slot()
 void onConnect(mosquitto *mosq, void *obj, int rc)
 {
     Q_UNUSED(mosq);
-    Q_UNUSED(obj);
-    if (rc == 0) {
-        qDebug() << "Connected to MQTT broker";
 
-        QString ip = FCommon::getLocalIPv4Address();
-        QByteArray payload = ip.toUtf8();
-        mosquitto_publish(mosq, nullptr, "device/ip", payload.size(), payload.constData(), 0, false);
+    auto client = static_cast<MqttClient*>(obj);
+    if (client) {
+        if (rc == 0) {
+            qDebug() << "Connected to MQTT broker";
 
-        // mosquitto_subscribe(mosq, nullptr, "test/topic", 0);
-    } else {
-        qCritical() << "Connection failed with code" << rc;
+            QString ip = FCommon::getLocalIPv4Address();
+            QString str = QString("[%1]%2").arg(client->m_id, ip);
+            QByteArray payload = str.toUtf8();
+            mosquitto_publish(mosq, nullptr, "device/ip", payload.size(), payload.constData(), 0, false);
+
+            // mosquitto_subscribe(mosq, nullptr, "test/topic", 0);
+        } else {
+            qCritical() << "Connection failed with code" << rc;
+        }
     }
 }
 

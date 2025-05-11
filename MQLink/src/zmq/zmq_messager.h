@@ -1,11 +1,13 @@
 #ifndef ZMQ_MESSAGER_H
 #define ZMQ_MESSAGER_H
 
-#include <QObject>
 #include "zmq_client.h"
 #include "zmq_server.h"
+
+#include <QObject>
 #include <QTimer>
 #include <QJsonObject>
+#include <QJsonArray>
 
 class ZmqMessager : public QObject
 {
@@ -29,12 +31,10 @@ private:
     QTimer *autoTestTimer;
 
     /* AutoTest */
-    QString zmqATContent;
-    int zmqFileNum{0};
-    QString testType;
-    QString zmqFileName_1;
-    QString zmqFileName_2;
-    QString zmqFileName_3;
+    QString zmqMessageType;
+    QJsonArray zmqATMessageArr;
+    QJsonArray zmqATFilePathArr;
+    int m_counter{0};
 
 private slots:
     void onAutoTestTimeout_slot();

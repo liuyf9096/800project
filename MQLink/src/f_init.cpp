@@ -10,6 +10,7 @@
 
 void servers_init()
 {
+    qDebug() << "application path:" << FCommon::appPath();
     FLogServer::GetInstance();
     FCommon::GetInstance()->printSystemInfo();
 
