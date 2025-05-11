@@ -25,8 +25,6 @@ private:
     Q_DISABLE_COPY(MessageCenter)
     ~MessageCenter();
 
-    void networkAutoSetup();
-
     QString m_id;
 };
 

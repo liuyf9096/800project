@@ -77,9 +77,9 @@ QString FCommon::releaseDate()
 QString FCommon::appPath()
 {
     QString path = QCoreApplication::applicationDirPath();
-    // if (path.endsWith("_d")) {
-    //     path.chop(2);
-    // }
+    if (path.endsWith("_d")) {
+        path.chop(2);
+    }
     return path;
 }
 
@@ -266,41 +266,43 @@ bool FCommon::setConfigFileValue(const QString &key1, const QString &key2, const
 
 QString FCommon::getLocalIPv4Address()
 {
-    const QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
-
-    // for (const QNetworkInterface &interface : interfaces) {
-    //     QString name = interface.humanReadableName();
-    //     if (!(interface.flags() & QNetworkInterface::IsUp) ||
-    //         !(interface.flags() & QNetworkInterface::IsRunning) ||
-    //         (interface.flags() & QNetworkInterface::IsLoopBack))
-    //         continue;
-
-    //     for (const QNetworkAddressEntry &entry : interface.addressEntries()) {
-    //         QHostAddress ip = entry.ip();
-    //         if (ip.protocol() == QAbstractSocket::IPv4Protocol) {
-    //             qDebug() << name << ip.toString();
-    //             // if (name.contains("eth") || name.contains("en") || name.contains("wlan")) {
-    //             //     return ip.toString();
-    //             // }
-    //             // if (name.contains("eth")) {
-    //             //     return ip.toString();
-    //             // }
-    //         }
-    //     }
-    // }
-
-    // for (const QNetworkInterface &iface : QNetworkInterface::allInterfaces()) {
-    //     if (iface.name() == "eth0") {
-    //         for (const QNetworkAddressEntry &entry : iface.addressEntries()) {
-    //             QHostAddress ip = entry.ip();
-    //             if (ip.protocol() == QAbstractSocket::IPv4Protocol) {
-    //                 return ip.toString();
-    //             }
-    //         }
-    //     }
-    // }
-
     QString hostIp = QString::fromLocal8Bit(qgetenv("HOST_IP"));
     return hostIp;
+
+#if 0
+    const QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
+
+    for (const QNetworkInterface &interface : interfaces) {
+        QString name = interface.humanReadableName();
+        if (!(interface.flags() & QNetworkInterface::IsUp) ||
+            !(interface.flags() & QNetworkInterface::IsRunning) ||
+            (interface.flags() & QNetworkInterface::IsLoopBack))
+            continue;
+
+        for (const QNetworkAddressEntry &entry : interface.addressEntries()) {
+            QHostAddress ip = entry.ip();
+            if (ip.protocol() == QAbstractSocket::IPv4Protocol) {
+                qDebug() << name << ip.toString();
+                // if (name.contains("eth") || name.contains("en") || name.contains("wlan")) {
+                //     return ip.toString();
+                // }
+                // if (name.contains("eth")) {
+                //     return ip.toString();
+                // }
+            }
+        }
+    }
+
+    for (const QNetworkInterface &iface : QNetworkInterface::allInterfaces()) {
+        if (iface.name() == "eth0") {
+            for (const QNetworkAddressEntry &entry : iface.addressEntries()) {
+                QHostAddress ip = entry.ip();
+                if (ip.protocol() == QAbstractSocket::IPv4Protocol) {
+                    return ip.toString();
+                }
+            }
+        }
+    }
+#endif
     return QString();
 }

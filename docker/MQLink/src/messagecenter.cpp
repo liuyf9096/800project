@@ -26,25 +26,9 @@ MessageCenter::MessageCenter(QObject *parent)
 
     zmqClient = ZmqMessager::GetInstance()->client;
     zmqServer = ZmqMessager::GetInstance()->server;
-
-    if (FSettings::GetInstance()->networkAutoSetup() == true) {
-        networkAutoSetup();
-    }
 }
 
 MessageCenter::~MessageCenter()
 {
     qDebug() << __FUNCTION__ /*<< QThread::currentThread()*/;
 }
-
-void MessageCenter::networkAutoSetup()
-{
-    qDebug() << __FUNCTION__;
-
-    QJsonObject mqttObj = FSettings::GetInstance()->getMqttObject();
-    QJsonObject zmqObj = FSettings::GetInstance()->getZmqObject();
-
-    MqttMessager::GetInstance()->setAutoTest(mqttObj);
-    ZmqMessager::GetInstance()->setAutoTest(zmqObj);
-}
-

@@ -12,7 +12,7 @@ public:
 
     static const int Version_major{ 1 };
     static const int Version_minor{ 0 };
-    static const int Version_patch{ 0 };
+    static const int Version_patch{ 1 };
 
     static void printSystemInfo();
 

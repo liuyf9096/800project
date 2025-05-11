@@ -1,11 +1,13 @@
 #ifndef MQTT_MESSAGER_H
 #define MQTT_MESSAGER_H
 
-#include <QObject>
 #include "mqtt_client.h"
 #include "mqtt_server.h"
+
+#include <QObject>
 #include <QTimer>
 #include <QJsonObject>
+#include <QJsonArray>
 
 class MqttMessager : public QObject
 {
@@ -29,7 +31,10 @@ private:
     QTimer *autoTestTimer;
 
     QString mqttATTopic;
-    QString mqttATContent;
+    QString mqttMessageType;
+    QJsonArray mqttATMessageArr;
+    QJsonArray mqttATFilePathArr;
+    int m_counter{0};
 
 private slots:
     void onAutoTestTimeout_slot();

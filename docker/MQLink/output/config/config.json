@@ -2,13 +2,14 @@
 	"mqtt": {
 		"client": {
 			"enable": true,
-			"address": "127.0.0.0",
+			"address": "127.0.0.1",
 			"port": 1883,
 			"autotest": {
-				"enable": false,
+				"enable": true,
 				"interval": 1000,
 				"type": "text",
-				"content": [
+				"topic": "test/topic",
+				"message": [
 					"Hello",
 					"World"
 				],
@@ -18,16 +19,17 @@
 				]
 			},
 			"subscribe": [
-				"device/ip",
-				"test/topic"
+				"device/ip"
 			]
 		},
-		"server": {}
+		"server": {
+			"enable": false
+		}
 	},
 	"zmq": {
 		"client": {
 			"enable": true,
-			"address": "127.0.0.0",
+			"address": "127.0.0.1",
 			"port": 5555,
 			"autotest": {
 				"enable": false,

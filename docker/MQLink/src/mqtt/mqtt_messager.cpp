@@ -1,5 +1,9 @@
 #include "mqtt_messager.h"
 #include "settings/f_settings.h"
+#include "f_common.h"
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QDebug>
 
 MqttMessager *MqttMessager::GetInstance()
 {
@@ -26,6 +30,11 @@ MqttMessager::MqttMessager(QObject *parent)
     autoTestTimer = new QTimer(this);
     autoTestTimer->setInterval(1000);
     connect(autoTestTimer, &QTimer::timeout, this, &MqttMessager::onAutoTestTimeout_slot);
+
+    QJsonObject obj = FCommon::getConfigFileValue("mqtt").toObject();
+    if (!obj.isEmpty()) {
+        setAutoTest(obj);
+    }
 }
 
 MqttMessager::~MqttMessager()
@@ -43,18 +52,23 @@ void MqttMessager::setAutoTest(QJsonObject obj)
     /* Mqtt Client*/
     bool clientEn = clientObj.value("enable").toBool();
     if (clientEn) {
-        QString ip = clientObj.value("ip").toString();
+        /* Connection */
+        QString address = clientObj.value("address").toString();
         int port = clientObj.value("port").toInt();
+        client->connect(address, port);
 
-        client->connect(ip, port);
-        bool autoTest = clientObj.value("autoTest").toBool();
-        if (autoTest) {
-            int interval = clientObj.value("autoTest_interval").toInt();
+        /* Auto Test */
+        QJsonObject autotestObj = clientObj.value("autotest").toObject();
+        bool autotest_en = autotestObj.value("enable").toBool();
+        if (autotest_en) {
             m_autoTest = true;
-            autoTestTimer->start(interval);
 
-            mqttATTopic = clientObj.value("autoTest_topic").toString();
-            mqttATContent = clientObj.value("autoTest_content").toString();
+            int interval = autotestObj.value("interval").toInt();
+            autoTestTimer->start(interval);
+            mqttATTopic = autotestObj.value("topic").toString();
+            mqttMessageType = autotestObj.value("type").toString();
+            mqttATMessageArr = autotestObj.value("message").toArray();
+            mqttATFilePathArr = autotestObj.value("filepath").toArray();
             qDebug() << "Mqtt Start Auto Test.";
         }
     }
@@ -70,6 +84,13 @@ void MqttMessager::onAutoTestTimeout_slot()
 {
     static int n = 1;
     QString current_time = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
-    client->publish(mqttATTopic, QString("[%1](%2) %3 : %4").arg(current_time, m_id).arg(n++).arg(mqttATContent));
+
+    if (m_counter >= mqttATMessageArr.count()) {
+        m_counter = 0;
+    }
+    QString content = mqttATMessageArr.at(m_counter).toString();
+    m_counter++;
+
+    client->publish(mqttATTopic, QString("[%1](%2) %3 : %4").arg(current_time, m_id).arg(n++).arg(content));
 }
 

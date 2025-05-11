@@ -29,6 +29,11 @@ ZmqMessager::ZmqMessager(QObject *parent)
     autoTestTimer = new QTimer(this);
     autoTestTimer->setInterval(1000);
     connect(autoTestTimer, &QTimer::timeout, this, &ZmqMessager::onAutoTestTimeout_slot);
+
+    QJsonObject obj = FCommon::getConfigFileValue("zmq").toObject();
+    if (!obj.isEmpty()) {
+        setAutoTest(obj);
+    }
 }
 
 ZmqMessager::~ZmqMessager()
@@ -46,22 +51,22 @@ void ZmqMessager::setAutoTest(QJsonObject obj)
     /* Zmq Client*/
     bool clientEn = clientObj.value("enable").toBool();
     if (clientEn) {
-        QString ip = clientObj.value("ip").toString();
+        /* Connetion */
+        QString address = clientObj.value("address").toString();
         int port = clientObj.value("port").toInt();
+        client->connectServer(QString("tcp://%1:%2").arg(address).arg(port));
 
-        client->connectServer(QString("tcp://%1:%2").arg(ip).arg(port));
-        bool autoTest = clientObj.value("autoTest").toBool();
-        if (autoTest) {
-            int interval = clientObj.value("autoTest_interval").toInt();
+        /* Auto Test */
+        QJsonObject autotestObj = clientObj.value("autotest").toObject();
+        bool autoTestEn = autotestObj.value("enable").toBool();
+        if (autoTestEn) {
+            int interval = autotestObj.value("interval").toInt();
             m_autoTest = true;
-            testType = clientObj.value("testType").toString();
+            zmqMessageType = autotestObj.value("type").toString();
             autoTestTimer->start(interval);
 
-            zmqATContent = clientObj.value("autoTest_content").toString();
-            zmqFileNum = clientObj.value("send_file_number").toInt();
-            zmqFileName_1 = clientObj.value("send_filepath_1").toString();
-            zmqFileName_2 = clientObj.value("send_filepath_2").toString();
-            zmqFileName_3 = clientObj.value("send_filepath_3").toString();
+            zmqATMessageArr = autotestObj.value("message").toArray();
+            zmqATFilePathArr = autotestObj.value("filepath").toArray();
             qDebug() << "Zmq Start Auto Test.";
         }
     }
@@ -78,21 +83,22 @@ void ZmqMessager::setAutoTest(QJsonObject obj)
 void ZmqMessager::onAutoTestTimeout_slot()
 {
     static int n = 1;
+    QString current_time = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
 
-    if (testType == "text") {
-        QString current_time = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
-        client->sendMessage(QString("[%1](%2)%3: %4").arg(current_time, m_id).arg(n++).arg(zmqATContent));
-    } else if (zmqFileNum > 0) {
-        if (n > zmqFileNum) {
-            n = 1;
+    if (zmqMessageType == "text") {
+        if (m_counter >= zmqATMessageArr.count()) {
+            m_counter = 0;
         }
-        if (n == 1) {
-            client->sendFileContent(zmqFileName_1);
-        } else if (n == 2) {
-            client->sendFileContent(zmqFileName_2);
-        } else if (n == 3) {
-            client->sendFileContent(zmqFileName_3);
+        QString content = zmqATMessageArr.at(m_counter).toString();
+        client->sendMessage(QString("[%1](%2)%3: %4").arg(current_time, m_id).arg(n++).arg(content));
+        m_counter++;
+    } else {
+        if (m_counter >= zmqATFilePathArr.count()) {
+            m_counter = 0;
         }
-        n++;
+
+        QString filepath = zmqATFilePathArr.at(m_counter).toString();
+        client->sendFileContent(filepath);
+        m_counter++;
     }
 }
