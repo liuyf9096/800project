@@ -88,6 +88,12 @@ void FLogServer::setMessageFlags(MessageFileFlags flags)
     d->m_flags = flags;
 }
 
+void FLogServer::setMessageFlags(int flags)
+{
+    Q_D(FLogServer);
+    d->m_flags = flags;
+}
+
 FLogServer::MessageFileFlags FLogServer::MessageFlags()
 {
     Q_D(FLogServer);

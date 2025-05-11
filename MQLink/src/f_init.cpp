@@ -27,7 +27,7 @@ void setLog()
     auto settings = FSettings::GetInstance();
     auto logger = FLogServer::GetInstance();
     logger->setMaxLogFileCount(settings->MaxLogFileCount());
-    logger->setMessageFlags(FLogServer::Content);
+    logger->setMessageFlags(settings->logContentType());
 
     if (settings->isLogServerEnable()) {
         logger->saveToTxtEnable(true, settings->logindex());

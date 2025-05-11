@@ -44,6 +44,14 @@ void FSettings::defaultValueInit()
     m_settings->setValue("groupID", "stevens.cs");
     m_settings->setValue("networkAutoSetup", true);
 
+    m_settings->beginGroup("Logger");
+    m_settings->setValue("enable", false);
+    m_settings->setValue("index", 7);
+    m_settings->setValue("content_type", 0);
+    m_settings->setValue("max_logfile_count", 20);
+    m_settings->endGroup();
+
+#if 0
     m_settings->beginGroup("MQTT_Client");
     m_settings->setValue("enable", false);
     m_settings->setValue("ip", "127.0.0.1");
@@ -81,13 +89,7 @@ void FSettings::defaultValueInit()
     m_settings->setValue("ip", "localhost");
     m_settings->setValue("port", 5555);
     m_settings->endGroup();
-
-    m_settings->beginGroup("Logger");
-    m_settings->setValue("enable", false);
-    m_settings->setValue("index", 0);
-    m_settings->setValue("content_type", 0);
-    m_settings->setValue("max_logfile_count", 20);
-    m_settings->endGroup();
+#endif
 }
 
 void FSettings::setValue(const QString &key, const QVariant &value)

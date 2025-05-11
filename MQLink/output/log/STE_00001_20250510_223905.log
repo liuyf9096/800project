@@ -1,0 +1,22 @@
+Debug  |2025-05-10 22:39:05.132| FLogServerPrivate::removeRedundantLogFile
+Debug  |2025-05-10 22:39:05.132| Log file Total size: 0 kb (0 Mb)
+Debug  |2025-05-10 22:39:05.139| read file: "C:/Users/User/workspace/MQLink/output/config/config.json"
+Debug  |2025-05-10 22:39:05.141| MqttMessager::setAutoTest QJsonObject({"address":"127.0.0.1","autotest":{"enable":true,"filepath":["1.txt","2.txt"],"interval":1000,"message":["Hello","World"],"topic":"test/topic","type":"text"},"enable":true,"port":1883,"subscribe":["device/ip"]}) QJsonObject({"enable":false})
+Debug  |2025-05-10 22:39:05.141| MqttClient Connected.
+Debug  |2025-05-10 22:39:05.142| Mqtt Start Auto Test.
+Debug  |2025-05-10 22:39:05.151| ZmqServer::setDownloadPath "C:/Users/User/workspace/MQLink/output/downloads"
+Debug  |2025-05-10 22:39:05.151| read file: "C:/Users/User/workspace/MQLink/output/config/config.json"
+Debug  |2025-05-10 22:39:05.151| ZmqMessager::setAutoTest QJsonObject({"address":"127.0.0.1","autotest":{"enable":true,"filepath":["1.txt","2.txt"],"interval":1000,"message":["Hello","World"],"type":"text"},"enable":true,"mode":4,"port":5555}) QJsonObject({"address":"localhost","enable":true,"mode":4,"port":5555})
+Debug  |2025-05-10 22:39:05.151| Connecting to server at "tcp://127.0.0.1:5555"  OK.
+Debug  |2025-05-10 22:39:05.151| Zmq Start Auto Test.
+Debug  |2025-05-10 22:39:05.158| Server is listening on "tcp://*:5555"
+Debug  |2025-05-10 22:39:05.191| Connected to MQTT broker
+Debug  |2025-05-10 22:39:05.322| write file: "C:/Users/User/workspace/MQLink/output/device.json"
+Debug  |2025-05-10 22:39:06.387| <<[Zmq Client] "[22:39:06.386](uav_0427045341)1: Hello"
+Debug  |2025-05-10 22:39:06.388| >>[Zmq Server] "[22:39:06.386](uav_0427045341)1: Hello"
+Debug  |2025-05-10 22:39:07.508| <<[Zmq Client] "[22:39:07.507](uav_0427045341)2: World"
+Debug  |2025-05-10 22:39:07.512| >>[Zmq Server] "[22:39:07.507](uav_0427045341)2: World"
+Debug  |2025-05-10 22:39:08.633| <<[Zmq Client] "[22:39:08.632](uav_0427045341)3: Hello"
+Debug  |2025-05-10 22:39:08.636| >>[Zmq Server] "[22:39:08.632](uav_0427045341)3: Hello"
+Debug  |2025-05-10 22:39:09.761| <<[Zmq Client] "[22:39:09.761](uav_0427045341)4: World"
+Debug  |2025-05-10 22:39:09.762| >>[Zmq Server] "[22:39:09.761](uav_0427045341)4: World"
