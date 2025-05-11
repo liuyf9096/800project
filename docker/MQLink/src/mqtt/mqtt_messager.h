@@ -36,8 +36,11 @@ private:
     QJsonArray mqttATFilePathArr;
     int m_counter{0};
 
+    QJsonArray deviceArr;
+
 private slots:
     void onAutoTestTimeout_slot();
+    void handleMqttMessage_slot(QString topic, QString message);
 };
 
 #endif // MQTT_MESSAGER_H

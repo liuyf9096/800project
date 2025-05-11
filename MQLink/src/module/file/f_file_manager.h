@@ -4,6 +4,7 @@
 #include <QByteArray>
 #include <QString>
 #include <QJsonObject>
+#include <QJsonValue>
 
 class FFileManager
 {
@@ -14,8 +15,10 @@ public:
     static QJsonObject readJsonFileObj(const QString &fileName, FileLocation loc = POS_APP);
     static QJsonObject readBinaryFileObj(const QString &fileName, FileLocation loc = POS_APP);
     static bool writeJsonFileObj(const QJsonObject &obj, const QString &fileName, FileLocation loc = POS_APP);
+    static bool writeJsonFileArr(const QJsonArray &arr, const QString &fileName, FileLocation loc = POS_APP);
     static bool writeFile(const QString &fileName, const QByteArray &data, FileLocation loc = POS_APP);
     static bool writeFile(const QString &fileName, const QString &text, FileLocation loc = POS_APP);
+    static bool createFile(const QString &fileName, FileLocation loc = POS_APP);
 };
 
 #endif // F_FILE_MANAGER_H

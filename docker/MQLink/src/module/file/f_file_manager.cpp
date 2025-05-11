@@ -67,6 +67,17 @@ bool FFileManager::writeJsonFileObj(const QJsonObject &obj, const QString &fileN
     return writeFile(fname, byteArray, loc);
 }
 
+bool FFileManager::writeJsonFileArr(const QJsonArray &arr, const QString &fileName, FileLocation loc)
+{
+    QString fname = fileName;
+    if (!fname.endsWith(".json")) {
+        fname.append(".json");
+    }
+    QJsonDocument doc(arr);
+    QByteArray byteArray = doc.toJson(QJsonDocument::Indented);
+    return writeFile(fname, byteArray, loc);
+}
+
 bool FFileManager::writeFile(const QString &fileName, const QByteArray &data, FileLocation loc)
 {
     if (fileName.isEmpty()) {
@@ -109,4 +120,16 @@ bool FFileManager::writeFile(const QString &fileName, const QString &text, FileL
     QByteArray data = text.toUtf8();
 
     return writeFile(fileName, data, loc);
+}
+
+bool FFileManager::createFile(const QString &fileName, FileLocation loc)
+{
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
+        qWarning() << file.errorString();
+        return false;
+    }
+    file.close();
+    return true;
 }

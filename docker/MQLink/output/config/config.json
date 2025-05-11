@@ -32,10 +32,10 @@
 			"address": "127.0.0.1",
 			"port": 5555,
 			"autotest": {
-				"enable": false,
+				"enable": true,
 				"interval": 1000,
 				"type": "text",
-				"content": [
+				"message": [
 					"Hello",
 					"World"
 				],
