@@ -71,6 +71,7 @@ scp  -r .\workspace\docker\* pi@169.254.81.11:/home/pi/Yufei/docker/
 docker run -itd \
   -v /home/pi/Yufei/docker/MQLink:/workspace \
   -p 5555:5555 \
+  -p 1883:1883 \
   -e HOST_IP="$(hostname -I | awk '{print $1}')" \
   --name mqlinkc \
   mqlink_image
@@ -79,3 +80,30 @@ cd /workspace/src
 qmake MQLink.pro -o Makefile
 make
 
+docker network create mqtt_net
+
+docker run -it -d \
+  --name mosquitto \
+  --network mqtt_net \
+  -p 1883:1883 \
+  eclipse-mosquitto
+  
+docker run -it --name myclient --network mqtt_net your_image
+
+
+mkdir -p ~/mosquitto/config
+nano ~/mosquitto/config/mosquitto.conf
+
+
+listener 1883
+allow_anonymous true
+
+docker run -it -d \
+  --name mosquitto \
+  --network mqtt_net \
+  -p 1883:1883 \
+  -v ~/mosquitto/config:/mosquitto/config \
+  eclipse-mosquitto
+  
+  
+  

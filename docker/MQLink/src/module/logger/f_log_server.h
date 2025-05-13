@@ -36,6 +36,7 @@ public:
     void stop();
 
     void setMessageFlags(MessageFileFlags flags);
+    void setMessageFlags(int flags);
     MessageFileFlags MessageFlags();
     QString getLogFilePath();
 

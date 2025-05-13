@@ -18,8 +18,6 @@ public:
     QString deviceId();
     QString groupId();
 
-    bool networkAutoSetup();
-
     QJsonObject getMqttObject();
     QJsonObject getZmqObject();
 

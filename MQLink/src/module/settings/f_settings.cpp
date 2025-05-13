@@ -42,7 +42,6 @@ void FSettings::defaultValueInit()
 
     m_settings->setValue("deviceID", "uav_" + timestamp);
     m_settings->setValue("groupID", "stevens.cs");
-    m_settings->setValue("networkAutoSetup", true);
 
     m_settings->beginGroup("Logger");
     m_settings->setValue("enable", false);
@@ -111,11 +110,6 @@ QString FSettings::deviceId()
 QString FSettings::groupId()
 {
     return m_settings->value("groupID").toString();
-}
-
-bool FSettings::networkAutoSetup()
-{
-    return m_settings->value("networkAutoSetup").toBool();
 }
 
 QJsonObject FSettings::getMqttObject()

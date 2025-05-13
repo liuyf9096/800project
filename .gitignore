@@ -6,3 +6,5 @@
 *.exe
 *.ilk
 *.pdb
+*.log
+*.pro.user

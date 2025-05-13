@@ -38,9 +38,8 @@ MqttMessager::MqttMessager(QObject *parent)
     QJsonObject obj = FCommon::getConfigFileValue("mqtt").toObject();
     if (!obj.isEmpty()) {
         setAutoTest(obj);
-    }
-
-    FFileManager::createFile("device.json");
+        FFileManager::createFile("device.json");
+    } 
 }
 
 MqttMessager::~MqttMessager()
@@ -53,7 +52,7 @@ void MqttMessager::setAutoTest(QJsonObject obj)
     QJsonObject clientObj = obj.value("client").toObject();
     QJsonObject serverObj = obj.value("server").toObject();
 
-    qDebug() << __FUNCTION__ << clientObj << serverObj;
+    qDebug() << "[MQTT] setup" << clientObj << serverObj;
 
     /* Mqtt Client*/
     bool clientEn = clientObj.value("enable").toBool();
@@ -110,7 +109,7 @@ void MqttMessager::onAutoTestTimeout_slot()
             m_counter = 0;
         }
         QString filepath = mqttATFilePathArr.at(m_counter).toString();
-        client->sendFileContent(mqttATTopic, QString("[%1](%2) %3 : %4").arg(current_time, m_id).arg(n++).arg(filepath));
+        client->sendFileContent(mqttATTopic, filepath);
         m_counter++;
     }
 }
